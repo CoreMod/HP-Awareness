@@ -1,0 +1,6 @@
+displayName = HP Awareness Mod
+author = Core
+version = 1.0
+side = Client
+buildIgnore = *.csproj, obj\*, bin\*
+hideCode = true
