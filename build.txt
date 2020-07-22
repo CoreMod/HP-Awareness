@@ -3,3 +3,4 @@ author = Core
 version = 1.0.1
 side = Client
 buildIgnore = *.csproj, obj\*, bin\*
+homepage = https://github.com/CoreMod/HP-Awareness
