@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace HPAware
@@ -24,5 +24,13 @@ namespace HPAware
         [Label("Disable Moon Lord Shader")]
         [Tooltip("Moon Lord's shader causes the overlays to be invisible. Turn this on to remove it.")]
         public bool DisableMLShader;
+
+        [Label("Disable Potion Sickness Audio")]
+        [Tooltip("When enabled, plays a higher-pitched potion-drinking sound effect when potion sickness disappears.")]
+        public bool DisablePSAudio;
+
+        [Label("Disable Potion Sickness Visual")]
+        [Tooltip("When enabled, an icon will appear above the player when potion sickness disappears.")]
+        public bool DisablePSVisual;
     }
 }
