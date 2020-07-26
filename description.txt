@@ -1,7 +1,13 @@
 This is a simple client-side mod that provides more feedback whenever you get hit or are on low health. You no longer have to stare at a health bar in the corner of your eye.
 
-Overlays can be disabled on the config.
+This mod also provides both an audio and visual indicator whenever potion sickness wears off.
+
+Features can be disabled or changed in the config.
 
 Planned features:
 -Debuff icons appearing above the player
--Indicator for potion sickness wearing off
+
+
+Changelog:
+1.0 - Released
+1.1.0 - Added Potion Sickness Indicators
