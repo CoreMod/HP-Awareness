@@ -4,10 +4,14 @@ This mod also provides both an audio and visual indicator whenever potion sickne
 
 Features can be disabled or changed in the config.
 
+
 Planned features:
--Debuff icons appearing above the player
+-Debuff icons appearing above the player whenever one is gained
+
 
 
 Changelog:
 1.0 - Released
+1.0.1 - Added Icon
 1.1.0 - Added Potion Sickness Indicators
+1.1.1 - Fixed some multiplayer bugs
