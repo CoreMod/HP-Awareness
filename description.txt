@@ -6,15 +6,12 @@ Features can be disabled or changed in the config.
 
 
 Planned features:
--Debuff icons appearing above the player
+-Debuff icons appearing above the player whenever one is gained
 
-
-Current Issues (Report them in Github):
--Somewhat buggy in multiplayer
 
 
 Changelog:
 1.0 - Released
 1.0.1 - Added Icon
 1.1.0 - Added Potion Sickness Indicators
-1.1.1 - Attempted to fix some multiplayer bugs
+1.1.1 - Fixed some multiplayer bugs
