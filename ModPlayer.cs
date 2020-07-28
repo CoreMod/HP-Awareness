@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -12,71 +12,60 @@ namespace HPAware
 {
     public class Modplayer : ModPlayer
     {
-        private bool Overlay;
         private float Counter;
         private bool Potion;
         private int PotionPopUp = 0;
 
-        public override void ResetEffects()
-        {
-            Overlay = false;
-        }
-
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (!GetInstance<Modconfig>().DisableHurtOverlay)
+            if (!Main.dedServ && !GetInstance<Modconfig>().DisableHurtOverlay)
             {
-                Overlay = true;
+                Filters.Scene.Activate("HPOverlay");
                 Counter = 30;
             }
         }
 
-        public override void UpdateBiomeVisuals()
+        public override void PostUpdateMiscEffects()
         {
-            if (!Main.dedServ && Overlay)
+            if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
-                Filters.Scene.Activate("HPOverlay");
-            }
-        }
-
-        public override void PostUpdate()
-        {
-            if (Filters.Scene["HPOverlay"].IsActive())
-            {
-                Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter / 10);
-                Counter--;
-
-                if (Counter == 0)
+                if (Filters.Scene["HPOverlay"].IsActive())
                 {
-                    Filters.Scene["HPOverlay"].Deactivate();
+                    Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter / 10);
+                    Counter--;
+
+                    if (Counter <= 0)
+                    {
+                        Filters.Scene["HPOverlay"].Deactivate();
+                    }
                 }
-            }
 
-            if (!Main.dedServ && player.statLife <= player.statLifeMax2 * GetInstance<Modconfig>().Overlaytrigger && !GetInstance<Modconfig>().DisableLowHpOverlay)
-            {
-                Filters.Scene.Activate("HPOverlay2");
-            }
-            else
-            {
-                Filters.Scene["HPOverlay2"].Deactivate();
-            }
-
-            if (Filters.Scene["MoonLord"].IsActive() && GetInstance<Modconfig>().DisableMLShader)
-            {
-                Filters.Scene["MoonLord"].Deactivate();
-            }
-
-            if (!Main.dedServ && player.potionDelay == 1)
-            {
-                if (!GetInstance<Modconfig>().DisablePSAudio)
+                if (player.statLife <= player.statLifeMax2 * GetInstance<Modconfig>().Overlaytrigger && !GetInstance<Modconfig>().DisableLowHpOverlay)
                 {
-                    Main.PlaySound(SoundID.Item, -1, -1, 3, 1f, 0.3f);
-                }                
-                if (!GetInstance<Modconfig>().DisablePSVisual)
+                    Filters.Scene.Activate("HPOverlay2");
+                }
+                else
                 {
-                    Potion = true;
-                }                             
-            }
+                    Filters.Scene["HPOverlay2"].Deactivate();
+                }
+
+                if (Filters.Scene["MoonLord"].IsActive() && GetInstance<Modconfig>().DisableMLShader)
+                {
+                    Filters.Scene["MoonLord"].Deactivate();
+                }
+
+                if (player.potionDelay == 1)
+                {
+                    if (!GetInstance<Modconfig>().DisablePSAudio)
+                    {
+                        Main.PlaySound(SoundID.Item, -1, -1, 3, 1f, 0.3f);
+                    }
+                    if (!GetInstance<Modconfig>().DisablePSVisual)
+                    {
+                        Potion = true;
+                    }
+                }
+            }           
         }
 
         public static readonly PlayerLayer PotionReady = new PlayerLayer("HPAware", "PotionReady", PlayerLayer.MiscEffectsFront, delegate (PlayerDrawInfo drawInfo)
@@ -85,7 +74,7 @@ namespace HPAware
             Mod mod = ModLoader.GetMod("HPAware");
             Modplayer modPlayer = drawPlayer.GetModPlayer<Modplayer>();
 
-            if (modPlayer.Potion)
+            if (!Main.dedServ && modPlayer.Potion)
             {
                 if (modPlayer.PotionPopUp <= 40)
                 {
