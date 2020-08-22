@@ -1,4 +1,10 @@
 # HP-Awareness
-A client mod for Terraria.
+This is a simple client-side mod for Terraria that contains several features:
 
-Currently adds in two simple overlays that flash whenever you are hit or are on low HP.
+-Provides more feedback whenever you get hit or are on low health. You no longer have to stare at a health bar in the corner of your eye.
+
+-Audio and visual indicator whenever potion sickness wears off.
+
+-Debuff indicators whenever you obtain a debuff.
+
+Features can be disabled or changed in the config.
