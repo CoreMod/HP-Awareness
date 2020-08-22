@@ -1,6 +1,6 @@
 displayName = HP Awareness
 author = Core
-version = 1.1.1
+version = 1.2.0
 side = Client
 buildIgnore = *.csproj, obj\*, bin\*
 homepage = https://github.com/CoreMod/HP-Awareness
