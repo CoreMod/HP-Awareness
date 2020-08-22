@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace HPAware
@@ -7,7 +7,6 @@ namespace HPAware
     [Label("Configuration")]
     public class Modconfig : ModConfig
     {
-
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Label("Disable overlay for getting hit")]
@@ -32,5 +31,8 @@ namespace HPAware
         [Label("Disable Potion Sickness Visual")]
         [Tooltip("When enabled, an icon will appear above the player when potion sickness disappears.")]
         public bool DisablePSVisual;
+
+        [Label("Disable Buff Pop Ups")]
+        public bool DisableBuffVisual;
     }
 }
