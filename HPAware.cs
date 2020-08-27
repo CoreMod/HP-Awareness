@@ -24,6 +24,8 @@ namespace HPAware
             {
                 Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlay")), "HPOverlay"), EffectPriority.VeryHigh);
                 Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlay")), "HPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay2"), EffectPriority.VeryHigh);
 
                 DebuffState = new DebuffUI();
                 DebuffInterface = new UserInterface();
