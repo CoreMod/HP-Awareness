@@ -9,6 +9,7 @@ namespace HPAware
 {
     public class Modplayer : ModPlayer
     {
+        Modconfig M = GetInstance<Modconfig>();
         private float Counter;
         private int PotionPopUp = 0;
         private int DebuffTimer;
@@ -16,9 +17,16 @@ namespace HPAware
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (!Main.dedServ && Main.myPlayer == player.whoAmI && !GetInstance<Modconfig>().DisableHurtOverlay)
+            if (!Main.dedServ && Main.myPlayer == player.whoAmI && !M.DisableHurtOverlay)
             {
-                Filters.Scene.Activate("HPOverlay");
+                if (!M.ClassicHurtOverlay)
+                {
+                    Filters.Scene.Activate("NewHPOverlay");
+                }
+                else
+                {
+                    Filters.Scene.Activate("HPOverlay");
+                }
                 Counter = 30;
             }
         }
@@ -27,11 +35,11 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
-                if (!GetInstance<Modconfig>().DisableBuffVisual)
+                if (!M.DisableBuffVisual)
                 {
                     for (int i = 0; i < BuffLoader.BuffCount; i++)
                     {
-                        if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner)
+                        if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
                         {
                             continue;
                         }
@@ -58,11 +66,11 @@ namespace HPAware
 
                 if (player.potionDelay == 1)
                 {
-                    if (!GetInstance<Modconfig>().DisablePSAudio)
+                    if (!M.DisablePSAudio)
                     {
                         Main.PlaySound(SoundID.Item, -1, -1, 3, 1f, 0.3f);
                     }
-                    if (!GetInstance<Modconfig>().DisablePSVisual)
+                    if (!M.DisablePSVisual)
                     {
                         GetInstance<HPAware>().ShowPotion();
                         PotionPopUp = 60;
@@ -82,27 +90,37 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
-                if (Filters.Scene["HPOverlay"].IsActive())
+                if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
                 {
                     Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter / 10);
+                    Filters.Scene["NewHPOverlay"].GetShader().UseOpacity(Counter / 10);
                     Counter--;
 
                     if (Counter <= 0)
                     {
                         Filters.Scene["HPOverlay"].Deactivate();
+                        Filters.Scene["NewHPOverlay"].Deactivate();
                     }
                 }
 
-                if (player.statLife <= player.statLifeMax2 * GetInstance<Modconfig>().Overlaytrigger && !GetInstance<Modconfig>().DisableLowHpOverlay)
+                if (player.statLife <= player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
                 {
-                    Filters.Scene.Activate("HPOverlay2");
+                    if (!M.ClassicLowHpOverlay)
+                    {
+                        Filters.Scene.Activate("NewHPOverlay2");
+                    }
+                    else
+                    {
+                        Filters.Scene.Activate("HPOverlay2");
+                    }
                 }
                 else
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
+                    Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
 
-                if (Filters.Scene["MoonLord"].IsActive() && GetInstance<Modconfig>().DisableMLShader)
+                if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
                 {
                     Filters.Scene["MoonLord"].Deactivate();
                 }
