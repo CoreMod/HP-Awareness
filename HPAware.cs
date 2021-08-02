@@ -12,6 +12,11 @@ namespace HPAware
 {
 	public class HPAware : Mod
 	{
+        
+    }
+
+    public class HPAwareSystem : ModSystem
+    {
         internal DebuffUI DebuffState;  //original
         internal UserInterface DebuffInterface;  //clone
         internal PotionUI PotionState;
@@ -22,35 +27,31 @@ namespace HPAware
         {
             if (!Main.dedServ)
             {
-                Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlay")), "HPOverlay"), EffectPriority.VeryHigh);
-                Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlay")), "HPOverlay2"), EffectPriority.VeryHigh);
-                Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay"), EffectPriority.VeryHigh);
-                Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "HPOverlay"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "HPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay2"), EffectPriority.VeryHigh);
 
                 DebuffState = new DebuffUI();
                 DebuffInterface = new UserInterface();
-
                 PotionState = new PotionUI();
                 PotionState.Activate();
                 PotionInterface = new UserInterface();
             }
         }
-
+        //Used for UI - potion and debuff
         internal void ShowDebuff()
         {
             DebuffInterface?.SetState(DebuffState);
         }
-
         internal void ShowPotion()
         {
             PotionInterface?.SetState(PotionState);
         }
-
         internal void HideDebuff()
         {
             DebuffInterface?.SetState(null);
         }
-
         internal void HidePotion()
         {
             PotionInterface?.SetState(null);
@@ -59,12 +60,10 @@ namespace HPAware
         public override void UpdateUI(GameTime gameTime)
         {
             lastUpdateUiGameTime = gameTime;
-
             if (DebuffInterface?.CurrentState != null)
             {
                 DebuffInterface.Update(gameTime);
             }
-
             if (PotionInterface?.CurrentState != null)
             {
                 PotionInterface.Update(gameTime);
@@ -74,7 +73,6 @@ namespace HPAware
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Map / Minimap"));
-
             if (mouseTextIndex != -1)
             {
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer
@@ -90,7 +88,6 @@ namespace HPAware
                     },
                 InterfaceScaleType.Game
                 ));
-
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer
                 (
                     "HP Awareness: Debuff Pop Up",

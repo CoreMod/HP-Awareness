@@ -17,14 +17,13 @@ namespace HPAware.UI
         {
             for (int i = 0; i < BuffLoader.BuffCount; i++)
             {
-                if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner)
+                if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
                 {
                     continue;
                 }
-
                 if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !GetInstance<Modplayer>().Debuffs.Contains(i))
                 {
-                    Texture2D texture = Main.buffTexture[i];
+                    Texture2D texture = Terraria.GameContent.TextureAssets.Buff[i].Value;
                     DebuffIcon = new UIImage(texture);
                     Append(DebuffIcon);
                 }
@@ -34,7 +33,7 @@ namespace HPAware.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Vector2 Position = new Vector2(Main.LocalPlayer.position.X - Main.screenPosition.X, Main.LocalPlayer.position.Y - Main.screenPosition.Y);
+            Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
             MarginLeft = Position.X - 6;
             MarginTop = Position.Y - 40;
             Recalculate();

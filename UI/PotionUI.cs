@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
-using static Terraria.ModLoader.ModContent;
+using Terraria.ModLoader;
 
 namespace HPAware.UI
 {
@@ -13,7 +13,7 @@ namespace HPAware.UI
 
         public override void OnActivate()
         {
-            Texture2D texture = GetTexture("HPAware/UI/PotionReady");
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("HPAware/UI/PotionReady");
             PotionReady = new UIImage(texture);
             Append(PotionReady);
         }
@@ -21,7 +21,7 @@ namespace HPAware.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Vector2 Position = new Vector2(Main.LocalPlayer.position.X - Main.screenPosition.X, Main.LocalPlayer.position.Y - Main.screenPosition.Y);
+            Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
             MarginLeft = Position.X;
             MarginTop = Position.Y - 65;
             Recalculate();

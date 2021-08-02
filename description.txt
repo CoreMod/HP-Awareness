@@ -11,9 +11,4 @@ Features can be disabled or changed in the config.
 
 
 Changelog:
-1.0 - Released
-1.0.1 - Added Icon
-1.1.0 - Added Potion Sickness Indicators
-1.1.1 - Fixed some multiplayer bugs
-1.2.0 - Added buff indicator, converted potion pop up into an UI, fixed some bugs
-1.2.1 - Remade overlays. Old ones still available in config. New icon
+0.1 - Initial port
