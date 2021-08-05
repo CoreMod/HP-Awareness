@@ -32,11 +32,11 @@ namespace HPAware
                 Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay"), EffectPriority.VeryHigh);
                 Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay2"), EffectPriority.VeryHigh);
 
-                DebuffState = new DebuffUI();
                 DebuffInterface = new UserInterface();
+                DebuffState = new DebuffUI();
+                PotionInterface = new UserInterface();
                 PotionState = new PotionUI();
                 PotionState.Activate();
-                PotionInterface = new UserInterface();
             }
         }
         //Used for UI - potion and debuff
@@ -59,6 +59,7 @@ namespace HPAware
 
         public override void UpdateUI(GameTime gameTime)
         {
+            //Update UI if it is on
             lastUpdateUiGameTime = gameTime;
             if (DebuffInterface?.CurrentState != null)
             {
@@ -72,6 +73,7 @@ namespace HPAware
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
+            //Draw UI underneath minimap layer when UI is on
             int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Map / Minimap"));
             if (mouseTextIndex != -1)
             {

@@ -17,11 +17,19 @@ namespace HPAware
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (!Main.dedServ && Main.myPlayer == Player.whoAmI && !M.DisableHurtOverlay)
+            if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
-                string Overlay = (!M.ClassicHurtOverlay) ? "NewHPOverlay" : "HPOverlay";
-                Filters.Scene.Activate(Overlay);
-                Counter = 30;
+                if (!M.DisableHurtOverlay)
+                {
+                    string Overlay = (!M.ClassicHurtOverlay) ? "NewHPOverlay" : "HPOverlay";
+                    Filters.Scene.Activate(Overlay);
+                    Counter = 2f;
+                }
+                else if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
+                {
+                    Filters.Scene["HPOverlay"].Deactivate();
+                    Filters.Scene["NewHPOverlay"].Deactivate();
+                }
             }
         }
 
@@ -40,6 +48,7 @@ namespace HPAware
                         }
                         if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
                         {
+                            GetInstance<HPAwareSystem>().HideDebuff();
                             GetInstance<HPAwareSystem>().ShowDebuff();
                             DebuffTimer = 60;
                             Debuffs.Add(i);
@@ -91,10 +100,13 @@ namespace HPAware
                 //Manipulate hurt shader
                 if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
                 {
-                    Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter / 10);
-                    Filters.Scene["NewHPOverlay"].GetShader().UseOpacity(Counter / 10);
-                    Counter--;
-                    if (Counter <= 0)
+                    Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter);
+                    Filters.Scene["NewHPOverlay"].GetShader().UseOpacity(Counter);
+                    if (Counter > 0)
+                    {
+                        Counter -= 0.1f;
+                    }
+                    if (Counter <= 0 && M.HaveIntensity)
                     {
                         Filters.Scene["HPOverlay"].Deactivate();
                         Filters.Scene["NewHPOverlay"].Deactivate();
@@ -138,14 +150,18 @@ namespace HPAware
 
         public override void UpdateDead()
         {
-            Filters.Scene["HPOverlay2"].Deactivate();
-            Filters.Scene["NewHPOverlay2"].Deactivate();
-            if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
+            if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
-                Filters.Scene["HPOverlay"].Deactivate();
-                Filters.Scene["NewHPOverlay"].Deactivate();
+                Filters.Scene["HPOverlay2"].Deactivate();
+                Filters.Scene["NewHPOverlay2"].Deactivate();
+                if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
+                {
+                    Filters.Scene["HPOverlay"].Deactivate();
+                    Filters.Scene["NewHPOverlay"].Deactivate();
+                }
+                GetInstance<HPAwareSystem>().HideDebuff();
+                GetInstance<HPAwareSystem>().HidePotion();
             }
-            GetInstance<HPAwareSystem>().HideDebuff();
         }
     }
 }

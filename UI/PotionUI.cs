@@ -13,14 +13,13 @@ namespace HPAware.UI
 
         public override void OnActivate()
         {
-            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("HPAware/UI/PotionReady");
+            Texture2D texture = ModContent.Request<Texture2D>("HPAware/UI/PotionReady").Value;
             PotionReady = new UIImage(texture);
             Append(PotionReady);
         }
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
             Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
             MarginLeft = Position.X;
             MarginTop = Position.Y - 65;
