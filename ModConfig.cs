@@ -18,8 +18,10 @@ namespace HPAware
         [Label("Disable Overlay for Getting Hit")]
         public bool DisableHurtOverlay;
 
-        [Label("Use Classic Hurt Overlay")]
-        public bool ClassicHurtOverlay;
+        [Label("Overlay to use")]
+        [OptionStrings(new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" })]
+        [DefaultValue("NewHPOverlay")]
+        public string HurtOverlayType;
 
         [Label("Have variable intensity")]
         [Tooltip("Hurt overlay fluctuates in intensity depending on how often you get hurt.")]

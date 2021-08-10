@@ -7,3 +7,7 @@ This is a simple client-side mod that contains several features:
 -Debuff indicators whenever you obtain a debuff.
 
 Features can be disabled or changed in the config.
+
+0.1.2
+-Added flat hurt overlay - covers entire screen rather than edges
+-Tweaked config

@@ -1,3 +1,4 @@
+using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -27,10 +28,11 @@ namespace HPAware
         {
             if (!Main.dedServ)
             {
-                Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "HPOverlay"), EffectPriority.VeryHigh);
-                Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "HPOverlay2"), EffectPriority.VeryHigh);
-                Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay"), EffectPriority.VeryHigh);
-                Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", AssetRequestMode.ImmediateLoad).Value), "HPOverlay"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlay", AssetRequestMode.ImmediateLoad).Value), "HPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay"), EffectPriority.VeryHigh);
+                Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/NewHPOverlay", AssetRequestMode.ImmediateLoad).Value), "NewHPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HPOverlayFlat", AssetRequestMode.ImmediateLoad).Value), "HPOverlayFlat"), EffectPriority.VeryHigh);
 
                 DebuffInterface = new UserInterface();
                 DebuffState = new DebuffUI();
