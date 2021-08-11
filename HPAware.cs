@@ -26,40 +26,36 @@ namespace HPAware
                 Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlay")), "HPOverlay2"), EffectPriority.VeryHigh);
                 Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay"), EffectPriority.VeryHigh);
                 Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/NewHPOverlay")), "NewHPOverlay2"), EffectPriority.VeryHigh);
+                Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/HPOverlayFlat")), "HPOverlayFlat"), EffectPriority.VeryHigh);
 
-                DebuffState = new DebuffUI();
                 DebuffInterface = new UserInterface();
-
+                DebuffState = new DebuffUI();
+                PotionInterface = new UserInterface();
                 PotionState = new PotionUI();
                 PotionState.Activate();
-                PotionInterface = new UserInterface();
             }
         }
-
+        //Used for UI - potion and debuff
         internal void ShowDebuff()
         {
             DebuffInterface?.SetState(DebuffState);
         }
-
         internal void ShowPotion()
         {
             PotionInterface?.SetState(PotionState);
         }
-
         internal void HideDebuff()
         {
             DebuffInterface?.SetState(null);
         }
-
         internal void HidePotion()
         {
             PotionInterface?.SetState(null);
         }
-
         public override void UpdateUI(GameTime gameTime)
         {
+            //Update UI if it is on
             lastUpdateUiGameTime = gameTime;
-
             if (DebuffInterface?.CurrentState != null)
             {
                 DebuffInterface.Update(gameTime);
@@ -73,8 +69,8 @@ namespace HPAware
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
+            //Draw UI underneath minimap layer when UI is on
             int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Map / Minimap"));
-
             if (mouseTextIndex != -1)
             {
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer
@@ -90,7 +86,6 @@ namespace HPAware
                     },
                 InterfaceScaleType.Game
                 ));
-
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer
                 (
                     "HP Awareness: Debuff Pop Up",

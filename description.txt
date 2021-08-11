@@ -9,7 +9,6 @@ This is a simple client-side mod that contains several features:
 Features can be disabled or changed in the config.
 
 
-
 Changelog:
 1.0 - Released
 1.0.1 - Added Icon
@@ -17,3 +16,4 @@ Changelog:
 1.1.1 - Fixed some multiplayer bugs
 1.2.0 - Added buff indicator, converted potion pop up into an UI, fixed some bugs
 1.2.1 - Remade overlays. Old ones still available in config. New icon
+1.3.0 - 1.4 backport

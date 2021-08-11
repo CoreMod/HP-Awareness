@@ -20,8 +20,7 @@ namespace HPAware.UI
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            Vector2 Position = new Vector2(Main.LocalPlayer.position.X - Main.screenPosition.X, Main.LocalPlayer.position.Y - Main.screenPosition.Y);
+            Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
             MarginLeft = Position.X;
             MarginTop = Position.Y - 65;
             Recalculate();

@@ -9,9 +9,10 @@ namespace HPAware
 {
     public class Modplayer : ModPlayer
     {
-        Modconfig M = GetInstance<Modconfig>();
+        readonly Modconfig M = GetInstance<Modconfig>();
+        readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
         private float Counter;
-        private int PotionPopUp = 0;
+        private int PotionPopUp;
         private int DebuffTimer;
         public readonly List<int> Debuffs = new List<int>();
 
@@ -19,15 +20,16 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == player.whoAmI && !M.DisableHurtOverlay)
             {
-                if (!M.ClassicHurtOverlay)
+                string HurtOverlay = GetInstance<Modconfig>().HurtOverlayType;
+                if (!M.DisableHurtOverlay)
                 {
-                    Filters.Scene.Activate("NewHPOverlay");
+                    Filters.Scene.Activate(HurtOverlay);
+                    Counter = 2f;
                 }
-                else
+                else if (Filters.Scene[HurtOverlay].IsActive())
                 {
-                    Filters.Scene.Activate("HPOverlay");
+                    Filters.Scene[HurtOverlay].Deactivate();
                 }
-                Counter = 30;
             }
         }
 
@@ -37,13 +39,13 @@ namespace HPAware
             {
                 if (!M.DisableBuffVisual)
                 {
+                    //Show debuff UI
                     for (int i = 0; i < BuffLoader.BuffCount; i++)
                     {
                         if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
                         {
                             continue;
                         }
-
                         if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
                         {
                             GetInstance<HPAware>().ShowDebuff();
@@ -55,15 +57,17 @@ namespace HPAware
                             Debuffs.Remove(i);
                         }
                     }
-
-                    DebuffTimer--;
-
-                    if (DebuffTimer <= 0)
-                    {
-                        GetInstance<HPAware>().HideDebuff();
-                    }
                 }
-
+                //Hide debuff UI
+                if (DebuffTimer > 0)
+                {
+                    DebuffTimer--;
+                }
+                if (DebuffTimer <= 0)
+                {
+                    GetInstance<HPAware>().HideDebuff();
+                }
+                //Show potion UI
                 if (player.potionDelay == 1)
                 {
                     if (!M.DisablePSAudio)
@@ -76,9 +80,11 @@ namespace HPAware
                         PotionPopUp = 60;
                     }
                 }
-
-                PotionPopUp--;
-
+                //Hide potion UI
+                if (PotionPopUp > 0)
+                {
+                    PotionPopUp--;
+                }
                 if (PotionPopUp <= 0)
                 {
                     GetInstance<HPAware>().HidePotion();
@@ -90,39 +96,51 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
-                if (Filters.Scene["HPOverlay"].IsActive() || Filters.Scene["NewHPOverlay"].IsActive())
+                string HurtOverlay = GetInstance<Modconfig>().HurtOverlayType;
+                //Manipulate hurt shader
+                if (Filters.Scene[HurtOverlay].IsActive())
                 {
-                    Filters.Scene["HPOverlay"].GetShader().UseOpacity(Counter / 10);
-                    Filters.Scene["NewHPOverlay"].GetShader().UseOpacity(Counter / 10);
-                    Counter--;
-
-                    if (Counter <= 0)
+                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(Counter);
+                    if (Counter > 0)
                     {
-                        Filters.Scene["HPOverlay"].Deactivate();
-                        Filters.Scene["NewHPOverlay"].Deactivate();
+                        Counter -= 0.1f;
+                    }
+                    if (Counter <= 0 && M.HaveIntensity)
+                    {
+                        Filters.Scene[HurtOverlay].Deactivate();
                     }
                 }
-
+                //Show Low HP shader
                 if (player.statLife <= player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
                 {
-                    if (!M.ClassicLowHpOverlay)
-                    {
-                        Filters.Scene.Activate("NewHPOverlay2");
-                    }
-                    else
-                    {
-                        Filters.Scene.Activate("HPOverlay2");
-                    }
+                    string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
+                    Filters.Scene.Activate(LowOverlay);
                 }
                 else
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
-
+                //Hide Moon Lord shader
                 if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
                 {
                     Filters.Scene["MoonLord"].Deactivate();
+                }
+                //Turn off alternate HP overlay if on
+                foreach (string Overlay in HurtTypes)
+                {
+                    if (Overlay != HurtOverlay && Filters.Scene[Overlay].IsActive())
+                    {
+                        Filters.Scene[Overlay].Deactivate();
+                    }
+                }
+                if (!M.ClassicLowHpOverlay && Filters.Scene["HPOverlay2"].IsActive())
+                {
+                    Filters.Scene["HPOverlay2"].Deactivate();
+                }
+                else if (M.ClassicLowHpOverlay && Filters.Scene["NewHPOverlay2"].IsActive())
+                {
+                    Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
             }
         }
@@ -130,13 +148,16 @@ namespace HPAware
         public override void UpdateDead()
         {
             Filters.Scene["HPOverlay2"].Deactivate();
-            
-            if (Filters.Scene["HPOverlay"].IsActive())
+            Filters.Scene["NewHPOverlay2"].Deactivate();
+            foreach (string Overlay in HurtTypes)
             {
-                Filters.Scene["HPOverlay"].Deactivate();
+                if (Filters.Scene[Overlay].IsActive())
+                {
+                    Filters.Scene[Overlay].Deactivate();
+                }
             }
-            
             GetInstance<HPAware>().HideDebuff();
+            GetInstance<HPAware>().HidePotion();
         }
     }
 }
