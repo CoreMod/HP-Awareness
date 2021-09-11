@@ -3,7 +3,6 @@ using Terraria.ModLoader.Config;
 
 namespace HPAware
 {
-    
     [Label("Configuration")]
     public class Modconfig : ModConfig
     {
@@ -39,6 +38,11 @@ namespace HPAware
         [Tooltip("Having HP lower or equal to this percentage activates the overlay.")]
         [DefaultValue(0.25)]
         public float Overlaytrigger;
+
+        [Header("[i:705] Player HP Bar")]
+
+        [Label("Disable player HP bar")]
+        public bool DisableHPBar;
 
         [Header("[i:28] Potion Pop Up")]
 

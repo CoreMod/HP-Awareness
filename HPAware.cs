@@ -23,6 +23,8 @@ namespace HPAware
         internal PotionUI PotionState;
         internal UserInterface PotionInterface;
         private GameTime lastUpdateUiGameTime;
+        internal HPBarUI HPBarState;
+        internal UserInterface HPBarInterface;
 
         public override void Load()
         {
@@ -38,10 +40,19 @@ namespace HPAware
                 DebuffState = new DebuffUI();
                 PotionInterface = new UserInterface();
                 PotionState = new PotionUI();
+                HPBarInterface = new UserInterface();
+                HPBarState = new HPBarUI();
                 PotionState.Activate();
             }
         }
-        //Used for UI - potion and debuff
+
+        public override void PreSaveAndQuit()
+        {
+            HideDebuff();
+            HidePotion();
+            HideHPBar();    //HP bar persists on rejoin, this fixes it
+        }
+        //Used for UI activation and deactivation
         internal void ShowDebuff()
         {
             DebuffInterface?.SetState(DebuffState);
@@ -50,6 +61,10 @@ namespace HPAware
         {
             PotionInterface?.SetState(PotionState);
         }
+        internal void ShowHPBar()
+        {
+            HPBarInterface?.SetState(HPBarState);
+        }
         internal void HideDebuff()
         {
             DebuffInterface?.SetState(null);
@@ -57,6 +72,10 @@ namespace HPAware
         internal void HidePotion()
         {
             PotionInterface?.SetState(null);
+        }
+        internal void HideHPBar()
+        {
+            HPBarInterface?.SetState(null);
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -70,6 +89,10 @@ namespace HPAware
             if (PotionInterface?.CurrentState != null)
             {
                 PotionInterface.Update(gameTime);
+            }
+            if (HPBarInterface?.CurrentState != null)
+            {
+                HPBarInterface.Update(gameTime);
             }
         }
 
@@ -100,6 +123,19 @@ namespace HPAware
                         if (lastUpdateUiGameTime != null && DebuffInterface?.CurrentState != null)
                         {
                             DebuffInterface.Draw(Main.spriteBatch, lastUpdateUiGameTime);
+                        }
+                        return true;
+                    },
+                InterfaceScaleType.Game
+                ));
+                layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer
+                (
+                    "HP Awareness: Player HP Bar",
+                    delegate
+                    {
+                        if (lastUpdateUiGameTime != null && HPBarInterface?.CurrentState != null)
+                        {
+                            HPBarInterface.Draw(Main.spriteBatch, lastUpdateUiGameTime);
                         }
                         return true;
                     },
