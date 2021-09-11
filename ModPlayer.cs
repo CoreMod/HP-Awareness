@@ -11,7 +11,7 @@ namespace HPAware
     {
         readonly Modconfig M = GetInstance<Modconfig>();
         readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
-        private float Counter;
+        private float ShaderAlpha;
         private int PotionPopUp;
         private int DebuffTimer;
         public readonly List<int> Debuffs = new List<int>();
@@ -24,11 +24,15 @@ namespace HPAware
                 if (!M.DisableHurtOverlay)
                 {
                     Filters.Scene.Activate(HurtOverlay);
-                    Counter = 2f;
+                    ShaderAlpha = 2f;
                 }
                 else if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     Filters.Scene[HurtOverlay].Deactivate();
+                }
+                if (!M.DisableHPBar)    //UI handles the rest
+                {
+                    GetInstance<HPAware>().ShowHPBar();
                 }
             }
         }
@@ -100,12 +104,12 @@ namespace HPAware
                 //Manipulate hurt shader
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
-                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(Counter);
-                    if (Counter > 0)
+                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha);
+                    if (ShaderAlpha > 0)
                     {
-                        Counter -= 0.1f;
+                        ShaderAlpha -= 0.1f;
                     }
-                    if (Counter <= 0 && M.HaveIntensity)
+                    if (ShaderAlpha <= 0 && M.HaveIntensity)
                     {
                         Filters.Scene[HurtOverlay].Deactivate();
                     }
@@ -158,6 +162,7 @@ namespace HPAware
             }
             GetInstance<HPAware>().HideDebuff();
             GetInstance<HPAware>().HidePotion();
+            GetInstance<HPAware>().HideHPBar();
         }
     }
 }

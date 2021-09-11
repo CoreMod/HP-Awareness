@@ -9,13 +9,13 @@ namespace HPAware
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Label("Disable Moon Lord Shader")]
+        [Label("Disable Moon Lord shader")]
         [Tooltip("Moon Lord's shader causes the overlays to be invisible. Turn this on to remove it.")]
         public bool DisableMLShader;
 
         [Header("[i:29] Hurt Overlay")]
 
-        [Label("Disable Overlay for Getting Hit")]
+        [Label("Disable overlay for getting hit")]
         public bool DisableHurtOverlay;
 
         [Label("Overlay to use")]
@@ -32,7 +32,7 @@ namespace HPAware
         [Label("Disable overlay for low health")]
         public bool DisableLowHpOverlay;
 
-        [Label("Use Classic Low HP Overlay")]
+        [Label("Use classic low HP overlay")]
         public bool ClassicLowHpOverlay;
 
         [Label("Low HP Percentage")]
@@ -40,19 +40,24 @@ namespace HPAware
         [DefaultValue(0.25)]
         public float Overlaytrigger;
 
+        [Header("[i:705] Player HP Bar")]
+
+        [Label("Disable player HP bar")]
+        public bool DisableHPBar;
+
         [Header("[i:28] Potion Pop Up")]
 
-        [Label("Disable Potion Sickness Audio")]
+        [Label("Disable potion sickness audio")]
         [Tooltip("When enabled, plays a higher-pitched potion-drinking sound effect when potion sickness disappears.")]
         public bool DisablePSAudio;
 
-        [Label("Disable Potion Sickness Visual")]
+        [Label("Disable potion sickness visual")]
         [Tooltip("When enabled, an icon will appear above the player when potion sickness disappears.")]
         public bool DisablePSVisual;
 
         [Header("[i:2701] Debuff Pop Up")]
 
-        [Label("Disable Buff Pop Ups")]
+        [Label("Disable buff pop ups")]
         public bool DisableBuffVisual;
     }
 }
