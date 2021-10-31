@@ -80,17 +80,20 @@ namespace HPAware.UI
 
         public override void Update(GameTime gameTime)
         {
-			if (Wait > 0)
+			if (!Main.gamePaused)
             {
-				Wait--;
-            }
-			if (Alpha > 0f && Wait <= 0)
-            {
-				Alpha -= 0.1f;
-            }
-			if (Alpha <= 0f)
-            {
-				GetInstance<HPAwareSystem>().HideHPBar();
+				if (Wait > 0)
+				{
+					Wait--;
+				}
+				if (Alpha > 0f && Wait <= 0)
+				{
+					Alpha -= 0.1f;
+				}
+				if (Alpha <= 0f)
+				{
+					GetInstance<HPAwareSystem>().HideHPBar();
+				}
 			}
         }
     }

@@ -12,3 +12,4 @@ Features can be disabled or changed in the config.
 
 0.1.4
 -Fixed HP bar disappearing while still taking damage
+-Fixed HP bar disappearing while game is paused
