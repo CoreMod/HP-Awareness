@@ -30,8 +30,9 @@ namespace HPAware
                 {
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
-                if (!M.DisableHPBar)    //UI handles the rest
+                if (!M.DisableHPBar)    //Show HP bar, UI handles the rest
                 {
+                    GetInstance<HPAware>().HideHPBar();
                     GetInstance<HPAware>().ShowHPBar();
                 }
             }
@@ -151,18 +152,21 @@ namespace HPAware
 
         public override void UpdateDead()
         {
-            Filters.Scene["HPOverlay2"].Deactivate();
-            Filters.Scene["NewHPOverlay2"].Deactivate();
-            foreach (string Overlay in HurtTypes)
+            if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
-                if (Filters.Scene[Overlay].IsActive())
+                Filters.Scene["HPOverlay2"].Deactivate();
+                Filters.Scene["NewHPOverlay2"].Deactivate();
+                foreach (string Overlay in HurtTypes)
                 {
-                    Filters.Scene[Overlay].Deactivate();
+                    if (Filters.Scene[Overlay].IsActive())
+                    {
+                        Filters.Scene[Overlay].Deactivate();
+                    }
                 }
+                GetInstance<HPAware>().HideDebuff();
+                GetInstance<HPAware>().HidePotion();
+                GetInstance<HPAware>().HideHPBar();
             }
-            GetInstance<HPAware>().HideDebuff();
-            GetInstance<HPAware>().HidePotion();
-            GetInstance<HPAware>().HideHPBar();
         }
     }
 }
