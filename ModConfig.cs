@@ -3,19 +3,18 @@ using Terraria.ModLoader.Config;
 
 namespace HPAware
 {
-    
     [Label("Configuration")]
     public class Modconfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Label("Disable Moon Lord shader")]
+        [Label("Disable Moon Lord Shader")]
         [Tooltip("Moon Lord's shader causes the overlays to be invisible. Turn this on to remove it.")]
         public bool DisableMLShader;
 
         [Header("[i:29] Hurt Overlay")]
 
-        [Label("Disable overlay for getting hit")]
+        [Label("Disable Overlay for Getting Hit")]
         public bool DisableHurtOverlay;
 
         [Label("Overlay to use")]
@@ -32,7 +31,7 @@ namespace HPAware
         [Label("Disable overlay for low health")]
         public bool DisableLowHpOverlay;
 
-        [Label("Use classic low HP overlay")]
+        [Label("Use Classic Low HP Overlay")]
         public bool ClassicLowHpOverlay;
 
         [Label("Low HP Percentage")]
@@ -47,17 +46,17 @@ namespace HPAware
 
         [Header("[i:28] Potion Pop Up")]
 
-        [Label("Disable potion sickness audio")]
+        [Label("Disable Potion Sickness Audio")]
         [Tooltip("When enabled, plays a higher-pitched potion-drinking sound effect when potion sickness disappears.")]
         public bool DisablePSAudio;
 
-        [Label("Disable potion sickness visual")]
+        [Label("Disable Potion Sickness Visual")]
         [Tooltip("When enabled, an icon will appear above the player when potion sickness disappears.")]
         public bool DisablePSVisual;
 
         [Header("[i:2701] Debuff Pop Up")]
 
-        [Label("Disable buff pop ups")]
+        [Label("Disable Buff Pop Ups")]
         public bool DisableBuffVisual;
     }
 }

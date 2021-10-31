@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
@@ -50,7 +51,7 @@ namespace HPAware.UI
 			R = MathHelper.Clamp(R, 0f, 255f);
 			G = MathHelper.Clamp(G, 0f, 255f);
 			A = MathHelper.Clamp(A, 0f, 255f);
-			Color color = new Color((byte)R, (byte)G, (byte)B, (byte)A);
+			Color color = new((byte)R, (byte)G, (byte)B, (byte)A);
 			if (HP36 < 3)
 			{
 				HP36 = 3;
@@ -58,22 +59,22 @@ namespace HPAware.UI
 			if (HP36 < 34)  // Slightly less than full HP
 			{
 				//HP border (inbetween filled and empty bar)
-				spriteBatch.Draw(Main.hbTexture2, new Vector2(X - Main.screenPosition.X + (float)HP36 * Scale, Y - Main.screenPosition.Y), new Rectangle(2, 0, 2, Main.hbTexture2.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(TextureAssets.Hb2.Value, new Vector2(X - Main.screenPosition.X + (float)HP36 * Scale, Y - Main.screenPosition.Y), new Rectangle(2, 0, 2, TextureAssets.Hb2.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 				//HP BG (empty)
-				spriteBatch.Draw(Main.hbTexture2, new Vector2(X - Main.screenPosition.X + (float)(HP36 + 2) * Scale, Y - Main.screenPosition.Y), new Rectangle(HP36 + 2, 0, 36 - HP36 - 2, Main.hbTexture2.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(TextureAssets.Hb2.Value, new Vector2(X - Main.screenPosition.X + (float)(HP36 + 2) * Scale, Y - Main.screenPosition.Y), new Rectangle(HP36 + 2, 0, 36 - HP36 - 2, TextureAssets.Hb2.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 				//HP bar (filled)
-				spriteBatch.Draw(Main.hbTexture1, new Vector2(X - Main.screenPosition.X, Y - Main.screenPosition.Y), new Rectangle(0, 0, HP36 - 2, Main.hbTexture1.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(TextureAssets.Hb1.Value, new Vector2(X - Main.screenPosition.X, Y - Main.screenPosition.Y), new Rectangle(0, 0, HP36 - 2, TextureAssets.Hb1.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 				//HP border 2
-				spriteBatch.Draw(Main.hbTexture1, new Vector2(X - Main.screenPosition.X + (float)(HP36 - 2) * Scale, Y - Main.screenPosition.Y), new Rectangle(32, 0, 2, Main.hbTexture1.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(TextureAssets.Hb1.Value, new Vector2(X - Main.screenPosition.X + (float)(HP36 - 2) * Scale, Y - Main.screenPosition.Y), new Rectangle(32, 0, 2, TextureAssets.Hb1.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 			}
 			else
 			{
 				if (HP36 < 36)  //HP Edge
 				{
-					spriteBatch.Draw(Main.hbTexture2, new Vector2(X - Main.screenPosition.X + (float)HP36 * Scale, Y - Main.screenPosition.Y), new Rectangle(HP36, 0, 36 - HP36, Main.hbTexture2.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(TextureAssets.Hb2.Value, new Vector2(X - Main.screenPosition.X + (float)HP36 * Scale, Y - Main.screenPosition.Y), new Rectangle(HP36, 0, 36 - HP36, TextureAssets.Hb2.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 				}
 				//Entire HP Bar
-				spriteBatch.Draw(Main.hbTexture1, new Vector2(X - Main.screenPosition.X, Y - Main.screenPosition.Y), new Rectangle(0, 0, HP36, Main.hbTexture1.Height), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(TextureAssets.Hb1.Value, new Vector2(X - Main.screenPosition.X, Y - Main.screenPosition.Y), new Rectangle(0, 0, HP36, TextureAssets.Hb1.Height()), color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 			}
 		}
 
@@ -89,7 +90,7 @@ namespace HPAware.UI
             }
 			if (Alpha <= 0f)
             {
-				GetInstance<HPAware>().HideHPBar();
+				GetInstance<HPAwareSystem>().HideHPBar();
 			}
         }
     }

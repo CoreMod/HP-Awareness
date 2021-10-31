@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
-using static Terraria.ModLoader.ModContent;
+using Terraria.ModLoader;
 
 namespace HPAware.UI
 {
@@ -13,7 +13,7 @@ namespace HPAware.UI
 
         public override void OnActivate()
         {
-            Texture2D texture = GetTexture("HPAware/UI/PotionReady");
+            Texture2D texture = ModContent.Request<Texture2D>("HPAware/UI/PotionReady").Value;
             PotionReady = new UIImage(texture);
             Append(PotionReady);
         }

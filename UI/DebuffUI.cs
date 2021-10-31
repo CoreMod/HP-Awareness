@@ -21,10 +21,9 @@ namespace HPAware.UI
                 {
                     continue;
                 }
-
                 if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !GetInstance<Modplayer>().Debuffs.Contains(i))
                 {
-                    Texture2D texture = Main.buffTexture[i];
+                    Texture2D texture = Terraria.GameContent.TextureAssets.Buff[i].Value;
                     DebuffIcon = new UIImage(texture);
                     Append(DebuffIcon);
                 }
