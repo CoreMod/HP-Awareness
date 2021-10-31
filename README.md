@@ -1,12 +1,26 @@
-# HP-Awareness
+# HP Awareness Mod
 This is a simple client-side mod for Terraria that contains several features:
 
--Provides more feedback whenever you get hit or are on low health
+<Details>
+  <Summary>Provides more feedback whenever you get hit or are on low health (Click to see sample)</Summary>
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/1702909413641986435/1BAF21EBF668D8AB48F8A64944D0C2E4C7FFFAE7/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+</Details>
 
--Player HP bar
+<Details>
+  <Summary>Player HP bar</Summary>
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/1695031707209870283/62AC195008784E392FFC53D74F9A7BBCFC0B411A/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+</Details>
 
--Audio and visual indicator whenever potion sickness wears off
+<Details>
+  <Summary>Audio and visual indicator whenever potion sickness wears off</Summary>
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/1702909413641998170/9D66ACB82C4E3422F94941ACD6BE1B5A370C394D/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+</Details>
+  
+<Details>
+  <Summary>Debuff indicators whenever you obtain a debuff</Summary>
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/1702909413642000496/F33BE0E05E716CB1F2584F650A0C9D9383EE6C3D/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true">
+</Details>
 
--Debuff indicators whenever you obtain a debuff
+Features can be disabled or changed in the config
 
-Features can be disabled or changed in the config.
+[You can find the 1.4 Steam page here](https://steamcommunity.com/sharedfiles/filedetails/?id=2564503881), 1.3 version can be found on the mod browser
