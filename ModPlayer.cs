@@ -32,6 +32,7 @@ namespace HPAware
                 }
                 if (!M.DisableHPBar)    //UI handles the rest
                 {
+                    GetInstance<HPAwareSystem>().HideHPBar();
                     GetInstance<HPAwareSystem>().ShowHPBar();
                 }
             }
