@@ -2,21 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
-using static Terraria.ModLoader.ModContent;
 
 namespace HPAware.UI
 {
-    internal class HPBarUI : UIState
+    public class HPBarUI : UIState
     {
-		private int Wait;
-		private float Alpha;
-
-        public override void OnActivate()
-        {
-			Wait = 90;
-			Alpha = 1f;
-        }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
 			//Code directly from vanilla but modified slightly
@@ -31,6 +21,11 @@ namespace HPAware.UI
 				float Scale = 1f;
 				float X = Main.LocalPlayer.Center.X - 18f;
 				float Y = Main.LocalPlayer.Center.Y + Main.LocalPlayer.height - 10f;
+				if (Main.LocalPlayer.gravDir != 1f)		//Upside down
+				{
+					Y -= Main.LocalPlayer.height + 20f;			//Upside down offset for player
+					Y = (2 * Main.screenPosition.Y) + (float)Main.screenHeight - Y;		//Double scrnPos negates the one used in draw code, screenHeight = resolution
+				}
 				float R;
 				float G;
 				float B = 0f;
@@ -46,9 +41,9 @@ namespace HPAware.UI
 					G = 255f * HPPercent * 2f;
 					R = 255f;
 				}
-				R *= Alpha;
-				G *= Alpha;
-				A *= Alpha;
+				R *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
+				G *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
+				A *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
 				R = MathHelper.Clamp(R, 0f, 255f);
 				G = MathHelper.Clamp(G, 0f, 255f);
 				A = MathHelper.Clamp(A, 0f, 255f);
@@ -79,24 +74,5 @@ namespace HPAware.UI
 				}
 			}
 		}
-
-        public override void Update(GameTime gameTime)
-        {
-			if (!Main.gamePaused)
-            {
-				if (Wait > 0)
-				{
-					Wait--;
-				}
-				if (Alpha > 0f && Wait <= 0)
-				{
-					Alpha -= 0.1f;
-				}
-				if (Alpha <= 0f)
-				{
-					GetInstance<HPAware>().HideHPBar();
-				}
-			}
-        }
     }
 }

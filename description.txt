@@ -10,7 +10,7 @@ This is a simple client-side mod that contains several features:
 
 More info can be found in the config.
 
-1.3.2
--Fixed HP bar disappearing while still taking damage
--Fixed HP bar disappearing while game is paused
--Added more clarity to the config
+1.3.3.0
+-Fixed every UI misaligning when upside-down and near edges of the world
+-Added buff blacklisting + buff searching
+-Added UI opacity options

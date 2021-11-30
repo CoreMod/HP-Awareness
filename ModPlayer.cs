@@ -14,11 +14,14 @@ namespace HPAware
         private float ShaderAlpha;
         private int PotionPopUp;
         private int DebuffTimer;
-        public readonly List<int> Debuffs = new List<int>();
+        private int BarWait;
+        public float BarAlpha;
+        private readonly List<int> Debuffs = new List<int>();
+        public int DebuffToShow;
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (!Main.dedServ && Main.myPlayer == player.whoAmI && !M.DisableHurtOverlay)
+            if (!Main.dedServ && Main.myPlayer == player.whoAmI)
             {
                 string HurtOverlay = GetInstance<Modconfig>().HurtOverlayType;
                 if (!M.DisableHurtOverlay)
@@ -30,8 +33,10 @@ namespace HPAware
                 {
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
-                if (!M.DisableHPBar)    //Show HP bar, UI handles the rest
+                if (!M.DisableHPBar)
                 {
+                    BarWait = M.HPBarDelay;
+                    BarAlpha = M.HPBarOpacity;
                     GetInstance<HPAware>().HideHPBar();
                     GetInstance<HPAware>().ShowHPBar();
                 }
@@ -47,17 +52,21 @@ namespace HPAware
                     //Show debuff UI
                     for (int i = 0; i < BuffLoader.BuffCount; i++)
                     {
-                        if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
+                        foreach (string BLDebuff in M.DebuffBL)
                         {
-                            continue;
+                            if (i != 0 && i == BuffID.TypeFromUniqueKey(BLDebuff) && !Debuffs.Contains(i))      //Check prevents modded buffs from being added into list if said mod is unloaded
+                            {
+                                Debuffs.Add(i);     //Prevents debuff from being shown due to it already being in the list when checked later (List takes IDs instead of keys)
+                            }
                         }
                         if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
                         {
+                            DebuffToShow = i;
                             GetInstance<HPAware>().ShowDebuff();
                             DebuffTimer = 60;
                             Debuffs.Add(i);
                         }
-                        else if (!Main.LocalPlayer.HasBuff(i) && Debuffs.Contains(i))
+                        else if (!Main.LocalPlayer.HasBuff(i) && Debuffs.Contains(i) && !M.DebuffBL.Contains(BuffID.GetUniqueKey(i)))
                         {
                             Debuffs.Remove(i);
                         }
@@ -125,6 +134,19 @@ namespace HPAware
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
+                }
+                //Manage HP bar
+                if (BarWait > 0)
+                {
+                    BarWait--;
+                }
+                if (BarAlpha > 0f && BarWait <= 0)
+                {
+                    BarAlpha -= 0.1f;
+                }
+                if (BarAlpha <= 0f)
+                {
+                    GetInstance<HPAware>().HideHPBar();
                 }
                 //Hide Moon Lord shader
                 if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
