@@ -2,40 +2,29 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
-using Terraria.ID;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
+using Terraria.GameContent;
 using static Terraria.ModLoader.ModContent;
 
 namespace HPAware.UI
 {
     internal class DebuffUI : UIState
     {
-        private UIImage DebuffIcon;
+        readonly Modconfig M = GetInstance<Modconfig>();
 
-        public override void OnActivate()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < BuffLoader.BuffCount; i++)
+            if (!Main.dedServ && Main.myPlayer == Main.LocalPlayer.whoAmI)
             {
-                if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
+                Vector2 Position = new(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
+                Vector2 Offset = new(16, 40);
+                if (Main.LocalPlayer.gravDir != 1f)
                 {
-                    continue;
+                    Position.Y = (2 * Main.screenPosition.Y) + (float)Main.screenHeight - Position.Y;
+                    Offset.Y = 85f;
                 }
-                if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !GetInstance<Modplayer>().Debuffs.Contains(i))
-                {
-                    Texture2D texture = Terraria.GameContent.TextureAssets.Buff[i].Value;
-                    DebuffIcon = new UIImage(texture);
-                    Append(DebuffIcon);
-                }
+                Color Opacity = new(M.BuffOpacity, M.BuffOpacity, M.BuffOpacity, M.BuffOpacity);
+                spriteBatch.Draw(TextureAssets.Buff[Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffToShow].Value, Position - Main.screenPosition - Offset, Opacity);
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
-            MarginLeft = Position.X - 6;
-            MarginTop = Position.Y - 40;
-            Recalculate();
         }
     }
 }

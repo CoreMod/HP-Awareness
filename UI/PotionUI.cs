@@ -2,28 +2,28 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace HPAware.UI
 {
     internal class PotionUI : UIState
     {
-        private UIImage PotionReady;
+        readonly Modconfig M = GetInstance<Modconfig>();
 
-        public override void OnActivate()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("HPAware/UI/PotionReady").Value;
-            PotionReady = new UIImage(texture);
-            Append(PotionReady);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            Vector2 Position = Main.LocalPlayer.position - Main.screenPosition;
-            MarginLeft = Position.X;
-            MarginTop = Position.Y - 65;
-            Recalculate();
+            if (!Main.dedServ && Main.myPlayer == Main.LocalPlayer.whoAmI)
+            {
+                Vector2 Position = new(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
+                Vector2 Offset = new(10, 65);
+                if (Main.LocalPlayer.gravDir != 1f)
+                {
+                    Position.Y = (2 * Main.screenPosition.Y) + (float)Main.screenHeight - Position.Y;
+                    Offset.Y = 110f;
+                }
+                Color Opacity = new(M.PotionOpacity, M.PotionOpacity, M.PotionOpacity, M.PotionOpacity);
+                spriteBatch.Draw(Request<Texture2D>("HPAware/UI/PotionReady").Value, Position - Main.screenPosition - Offset, Opacity);
+            }
         }
     }
 }

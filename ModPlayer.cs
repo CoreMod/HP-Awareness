@@ -14,7 +14,10 @@ namespace HPAware
         private float ShaderAlpha;
         private int PotionPopUp;
         private int DebuffTimer;
-        public readonly List<int> Debuffs = new();
+        private int BarWait;
+        public float BarAlpha;
+        private readonly List<int> Debuffs = new();
+        public int DebuffToShow;
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
@@ -32,6 +35,8 @@ namespace HPAware
                 }
                 if (!M.DisableHPBar)    //UI handles the rest
                 {
+                    BarWait = M.HPBarDelay;
+                    BarAlpha = M.HPBarOpacity;
                     GetInstance<HPAwareSystem>().HideHPBar();
                     GetInstance<HPAwareSystem>().ShowHPBar();
                 }
@@ -47,13 +52,16 @@ namespace HPAware
                     //Show debuff UI
                     for (int i = 0; i < BuffLoader.BuffCount; i++)
                     {
-                        if (i == BuffID.Campfire || i == BuffID.HeartLamp || i == BuffID.PeaceCandle || i == BuffID.StarInBottle || i == BuffID.PotionSickness || i == BuffID.ManaSickness || i == BuffID.Sunflower || i == BuffID.MonsterBanner || i == BuffID.Werewolf || i == BuffID.Merfolk)
+                        foreach (string BLDebuff in M.DebuffBL)
                         {
-                            continue;
+                            if (i != 0 && BuffID.Search.GetName(i) == BLDebuff && !Debuffs.Contains(i))      //Check prevents modded buffs from being added into list if said mod is unloaded
+                            {
+                                Debuffs.Add(i);     //Prevents debuff from being shown due to it already being in the list when checked later (List takes IDs instead of keys)
+                            }
                         }
                         if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
                         {
-                            GetInstance<HPAwareSystem>().HideDebuff();
+                            DebuffToShow = i;
                             GetInstance<HPAwareSystem>().ShowDebuff();
                             DebuffTimer = 60;
                             Debuffs.Add(i);
@@ -126,6 +134,19 @@ namespace HPAware
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
+                }
+                //Manage HP bar
+                if (BarWait > 0)
+                {
+                    BarWait--;
+                }
+                if (BarAlpha > 0f && BarWait <= 0)
+                {
+                    BarAlpha -= 0.1f;
+                }
+                if (BarAlpha <= 0f)
+                {
+                    GetInstance<HPAwareSystem>().HideHPBar();
                 }
                 //Hide Moon Lord shader
                 if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
