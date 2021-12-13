@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI;
+using static Terraria.ModLoader.ModContent;
 
 namespace HPAware.UI
 {
@@ -19,8 +20,8 @@ namespace HPAware.UI
 					HPPercent = 1f;
 				}
 				int HP36 = (int)(36f * HPPercent);
-				float Scale = 1f;
-				float X = Main.LocalPlayer.Center.X - 18f;
+				float Scale = GetInstance<Modconfig>().HPBarScale;
+				float X = Main.LocalPlayer.Center.X - (18f * Scale);
 				float Y = Main.LocalPlayer.Center.Y + Main.LocalPlayer.height - 10f;
 				if (Main.LocalPlayer.gravDir != 1f)     //Upside down
 				{

@@ -22,9 +22,9 @@ namespace HPAware
         internal UserInterface DebuffInterface;  //clone
         internal PotionUI PotionState;
         internal UserInterface PotionInterface;
-        private GameTime lastUpdateUiGameTime;
         internal HPBarUI HPBarState;
         internal UserInterface HPBarInterface;
+        private GameTime lastUpdateUiGameTime;
 
         public override void Load()
         {

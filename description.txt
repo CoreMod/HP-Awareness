@@ -1,16 +1,17 @@
-This is a simple client-side mod that contains several features:
+This is a simple client-side mod that contains:
 
--Provides more feedback whenever you get hit or are on low health. You no longer have to stare at a health bar in the corner of your eye.
+-Hurt and low HP overlays
 
 -Player HP bar
 
--Audio and visual indicator whenever potion sickness wears off.
+-Audio and visual indicator above you whenever potion sickness wears off
 
--Debuff indicators whenever you obtain a debuff.
+-Debuff indicators above you whenever you obtain a debuff
 
-More info can be found in the config.
+Every feature can be disabled or changed to your liking in the config.
 
-0.1.4.3
--Fixed every UI misaligning when upside-down and near edges of the world
--Added buff blacklisting + buff searching
--Added UI opacity options
+Suggest/report features and bugs through Github (homepage), preview images also available there.
+
+0.1.4.4
+-Added more options for debuff icons
+-Added UI scaling
