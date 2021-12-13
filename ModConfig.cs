@@ -13,7 +13,7 @@ namespace HPAware
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Label("Disable Moon Lord Shader")]
-        [Tooltip("Moon Lord's shader may cause the overlays below to be invisible. Turn this on to disable the shader.")]
+        [Tooltip("Moon Lord's shader may cause the 2 overlays below to be invisible. Turn this on to disable the shader.")]
         public bool DisableMLShader;
 
         [Header("[i:29] Hurt Overlay")]     //--------------------------------
@@ -23,13 +23,14 @@ namespace HPAware
         public bool DisableHurtOverlay;
 
         [Label("Overlay to use")]
+        [Tooltip("Determines Overlay type \nHPOverlay - Single color, covers screen edges\nNew - Gradient, covers screen edges\nFlat - Single color, fills screen")]
         [OptionStrings(new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" })]
         [DrawTicks]
         [DefaultValue("NewHPOverlay")]
         public string HurtOverlayType;
 
         [Label("Have variable intensity")]
-        [Tooltip("Hurt overlay's opacity and size fluctuates depending on how often you get hurt.")]
+        [Tooltip("Hurt overlay's opacity and size fluctuates depending on how often you get hurt")]
         public bool HaveIntensity;
 
         [Header("[i:29] Low HP Overlay")]   //--------------------------------
@@ -39,11 +40,11 @@ namespace HPAware
         public bool DisableLowHpOverlay;
 
         [Label("Use Classic Low HP Overlay")]
-        [Tooltip("Instead of a gradient, it is a box.")]
+        [Tooltip("Instead of a gradient, it is a single color")]
         public bool ClassicLowHpOverlay;
 
         [Label("Low HP Percentage")]
-        [Tooltip("Having HP lower or equal to this percentage activates the overlay.")]
+        [Tooltip("Having HP lower or equal to this percentage activates the overlay")]
         [DefaultValue(0.25)]
         public float Overlaytrigger;
 
@@ -66,6 +67,13 @@ namespace HPAware
         [DefaultValue(1f)]
         public float HPBarOpacity;
 
+        [Label("Icon Scale")]
+        [Tooltip("Determines size of the bar")]
+        [Range(0.3f, 2f)]
+        [Increment(0.1f)]
+        [DefaultValue(1f)]
+        public float HPBarScale;
+
         [Header("[i:28] Potion Pop Up")]    //--------------------------------
 
         [Label("Disable Potion Sickness Audio")]
@@ -81,16 +89,37 @@ namespace HPAware
         [DefaultValue(255)]
         public byte PotionOpacity;
 
+        [Label("Icon Scale")]
+        [Tooltip("Determines size of the icon")]
+        [Range(0.3f, 2f)]
+        [Increment(0.1f)]
+        [DefaultValue(1f)]
+        public float PotionScale;
+
         [Header("[i:2701] Debuff Pop Up")]  //--------------------------------
 
         [Label("Disable Debuff Pop Ups")]
-        [Tooltip("When you get a debuff, the debuff's icon will appear above the player for a second. Turn this on to disable it.")]
+        [Tooltip("When you get a debuff, the debuff's icon(s) will appear above the player for a second. Turn this on to disable it.")]
         public bool DisableBuffVisual;
 
+        [Label("Layout to use")]
+        [Tooltip("Determines icon layout\nMost recent only - shows the most recently gained debuff\nOther two show every current debuff in an orientation")]
+        [OptionStrings(new string[] { "Most recent only", "Horizontal", "Vertical" })]
+        [DrawTicks]
+        [DefaultValue("Vertical")]
+        public string BuffLayout;
+
         [Label("Icon Opacity")]
-        [Tooltip("Determines transparency of the icon (255 = Fully visible, 0 = Invisible)")]
+        [Tooltip("Determines transparency of the icon(s) (255 = Fully visible, 0 = Invisible)")]
         [DefaultValue(255)]
         public byte BuffOpacity;
+
+        [Label("Icon Scale")]
+        [Tooltip("Determines size of the icon(s)")]
+        [Range(0.3f, 2f)]
+        [Increment(0.1f)]
+        [DefaultValue(1f)]
+        public float BuffScale;
 
         [Label("Debuff Blacklist")]
         [Tooltip("Any debuffs in this list will NOT have a pop up (See next page for options)")]

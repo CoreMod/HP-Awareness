@@ -15,14 +15,39 @@ namespace HPAware.UI
             if (!Main.dedServ && Main.myPlayer == Main.LocalPlayer.whoAmI)
             {
                 Vector2 Position = new Vector2(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
-                Vector2 Offset = new Vector2(16, 40);
+                Vector2 Offset = new Vector2(15, 40);
+                Color Opacity = new Color(M.BuffOpacity, M.BuffOpacity, M.BuffOpacity, M.BuffOpacity);
+                if (Main.LocalPlayer.GetModPlayer<Modplayer>().PotionTimer > 0 && M.BuffLayout == "Vertical")     //Checking UI with isVisible doesn't work, sad
+                {
+                    Offset.X = 35f;
+                }
                 if (Main.LocalPlayer.gravDir != 1f)
                 {
                     Position.Y = (2 * Main.screenPosition.Y) + (float)Main.screenHeight - Position.Y;
-                    Offset.Y = 85f;
+                    Offset.Y += 40f / M.BuffScale;
                 }
-                Color Opacity = new Color(M.BuffOpacity, M.BuffOpacity, M.BuffOpacity, M.BuffOpacity);
-                spriteBatch.Draw(Main.buffTexture[Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffToShow], Position - Main.screenPosition - Offset, Opacity);
+                if (M.BuffLayout != "Most recent only")
+                {
+                    float Temp = Offset.Y;
+                    for (int i = 0; i < Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffsToShow.Count; i++)
+                    {
+                        if (M.BuffLayout == "Vertical")
+                        {
+                            Offset.Y = 30f * (Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffsToShow.Count - 1);
+                            Offset.Y += i * -30f;
+                            Offset.Y += Temp;
+                        }
+                        else
+                        {
+                            Offset.X = (i * -30f) + (Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffsToShow.Count * 15);
+                        }
+                        spriteBatch.Draw(Main.buffTexture[Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffsToShow[i]], Position - Main.screenPosition - (Offset * M.BuffScale), new Rectangle(0, 0, 32, 32), Opacity, 0f, Vector2.Zero, M.BuffScale, SpriteEffects.None, 1f);
+                    }
+                }
+                else
+                {
+                    spriteBatch.Draw(Main.buffTexture[Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffToShow], Position - Main.screenPosition - (Offset * M.BuffScale), new Rectangle(0, 0, 32, 32), Opacity, 0f, Vector2.Zero, M.BuffScale, SpriteEffects.None, 1f);
+                } 
             }
         }
     }

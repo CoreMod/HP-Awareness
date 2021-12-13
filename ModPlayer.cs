@@ -12,12 +12,13 @@ namespace HPAware
         readonly Modconfig M = GetInstance<Modconfig>();
         readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
         private float ShaderAlpha;
-        private int PotionPopUp;
-        private int DebuffTimer;
-        private int BarWait;
+        public int PotionTimer;
+        public int DebuffTimer;
+        private int BarTimer;
         public float BarAlpha;
         private readonly List<int> Debuffs = new List<int>();
         public int DebuffToShow;
+        public List<int> DebuffsToShow = new List<int>();
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
@@ -35,7 +36,7 @@ namespace HPAware
                 }
                 if (!M.DisableHPBar)
                 {
-                    BarWait = M.HPBarDelay;
+                    BarTimer = M.HPBarDelay;
                     BarAlpha = M.HPBarOpacity;
                     GetInstance<HPAware>().HideHPBar();
                     GetInstance<HPAware>().ShowHPBar();
@@ -62,6 +63,7 @@ namespace HPAware
                         if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
                         {
                             DebuffToShow = i;
+                            DebuffsToShow.Add(i);
                             GetInstance<HPAware>().ShowDebuff();
                             DebuffTimer = 60;
                             Debuffs.Add(i);
@@ -69,6 +71,7 @@ namespace HPAware
                         else if (!Main.LocalPlayer.HasBuff(i) && Debuffs.Contains(i) && !M.DebuffBL.Contains(BuffID.GetUniqueKey(i)))
                         {
                             Debuffs.Remove(i);
+                            DebuffsToShow.Remove(i);
                         }
                     }
                 }
@@ -91,15 +94,15 @@ namespace HPAware
                     if (!M.DisablePSVisual)
                     {
                         GetInstance<HPAware>().ShowPotion();
-                        PotionPopUp = 60;
+                        PotionTimer = 60;
                     }
                 }
                 //Hide potion UI
-                if (PotionPopUp > 0)
+                if (PotionTimer > 0)
                 {
-                    PotionPopUp--;
+                    PotionTimer--;
                 }
-                if (PotionPopUp <= 0)
+                if (PotionTimer <= 0)
                 {
                     GetInstance<HPAware>().HidePotion();
                 }
@@ -136,11 +139,11 @@ namespace HPAware
                     Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
                 //Manage HP bar
-                if (BarWait > 0)
+                if (BarTimer > 0)
                 {
-                    BarWait--;
+                    BarTimer--;
                 }
-                if (BarAlpha > 0f && BarWait <= 0)
+                if (BarAlpha > 0f && BarTimer <= 0)
                 {
                     BarAlpha -= 0.1f;
                 }
