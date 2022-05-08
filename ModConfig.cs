@@ -43,8 +43,13 @@ namespace HPAware
         [Tooltip("Instead of a gradient, it is a single color")]
         public bool ClassicLowHpOverlay;
 
+        [Label("Disable Audio")]
+        [Tooltip("Whenever below a certain percentage of health, a high-pitched ding plays repeatedly. Turn this on to disable it.")]
+        [DefaultValue(true)]
+        public bool DisableLowHpAudio;
+
         [Label("Low HP Percentage")]
-        [Tooltip("Having HP lower or equal to this percentage activates the overlay")]
+        [Tooltip("Having HP lower or equal to this percentage activates the overlay/sound")]
         [DefaultValue(0.25)]
         public float Overlaytrigger;
 

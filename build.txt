@@ -1,6 +1,6 @@
 displayName = HP Awareness
 author = Core
-version = 1.3.4.0
+version = 1.3.5.0
 side = Client
 hideCode = true
 buildIgnore = *.csproj, obj\*, bin\*

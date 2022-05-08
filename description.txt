@@ -12,6 +12,5 @@ Every feature can be disabled or changed to your liking in the config.
 
 Suggest/report features and bugs through Github (homepage), preview images also available there.
 
-1.3.4.0
--Added more options for debuff icons
--Added UI scaling
+1.3.5.0
+-Added sound for low HP, disabled by default
