@@ -138,6 +138,10 @@ namespace HPAware
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
+                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && Main.GameUpdateCount % 35 == 0 && !M.DisableLowHpAudio)
+                {
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, -1, -1, 35, 1f, 0.8f);
+                }
                 //Manage HP bar
                 if (BarTimer > 0)
                 {
