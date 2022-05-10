@@ -12,5 +12,6 @@ Every feature can be disabled or changed to your liking in the config.
 
 Suggest/report features and bugs through Github (homepage), preview images also available there.
 
-1.3.5.0
--Added sound for low HP, disabled by default
+1.3.5.1
+-Added more clarification on using debuff lists
+-Added little note on Fargo's Mutant Mod in config
