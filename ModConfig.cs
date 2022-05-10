@@ -101,7 +101,7 @@ namespace HPAware
         [DefaultValue(1f)]
         public float PotionScale;
 
-        [Header("[i:2701] Debuff Pop Up")]  //--------------------------------
+        [Header("[i:2701] Debuff Pop Up\n(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, then check their config)")]  //--------------------------------
 
         [Label("Disable Debuff Pop Ups")]
         [Tooltip("When you get a debuff, the debuff's icon(s) will appear above the player for a second. Turn this on to disable it.")]
@@ -127,7 +127,7 @@ namespace HPAware
         public float BuffScale;
 
         [Label("Debuff Blacklist")]
-        [Tooltip("Any debuffs in this list will NOT have a pop up (See next page for options)")]
+        [Tooltip("Any debuffs in this list will NOT have a pop up (See next page for options)\nReload mods for best effects")]
         public List<string> DebuffBL = new()
         { "Campfire", "PeaceCandle", "HeartLamp", "CatBast",
             "StarInBottle", "PotionSickness", "ManaSickness",
@@ -139,7 +139,8 @@ namespace HPAware
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Header("Must be in-world to view, use reset defaults to refresh list." +
+        [Header("Copy & paste desired debuffs below over to blacklist." +
+            "\nMust be in-world to view, use restore defaults to refresh list." +
             "\nInteract w/ textbox to use copy & paste." +
             "\nCheck \"HPAware_NBuffList\" file in your Mod Configs folder for better list view (make & save any changes for it to appear/update first).")]
         [Label("Debuffs")]
