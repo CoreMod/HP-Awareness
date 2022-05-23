@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -89,7 +90,7 @@ namespace HPAware
                 {
                     if (!M.DisablePSAudio)
                     {
-                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, -1, -1, 3, 1f, 0.3f);
+                        SoundEngine.PlaySound(PotionRdySnd);
                     }
                     if (!M.DisablePSVisual)
                     {
@@ -140,7 +141,7 @@ namespace HPAware
                 }
                 if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && Main.GameUpdateCount % 35 == 0 && !M.DisableLowHpAudio)
                 {
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, -1, -1, 35, 1f, 0.8f);
+                    SoundEngine.PlaySound(LowBeat);
                 }
                 //Manage HP bar
                 if (BarTimer > 0)
@@ -197,5 +198,17 @@ namespace HPAware
                 GetInstance<HPAwareSystem>().HideHPBar();
             }
         }
+
+        public static readonly SoundStyle PotionRdySnd = new("Terraria/Sounds/Item_3")
+        {
+            Volume = 1f,
+            Pitch = 0.3f
+        };
+
+        public static readonly SoundStyle LowBeat = new("Terraria/Sounds/Item_35")
+        {
+            Volume = 1f,
+            Pitch = 0.8f
+        };
     }
 }
