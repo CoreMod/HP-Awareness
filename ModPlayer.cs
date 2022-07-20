@@ -21,7 +21,7 @@ namespace HPAware
         public int DebuffToShow;
         public List<int> DebuffsToShow = new();
 
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {

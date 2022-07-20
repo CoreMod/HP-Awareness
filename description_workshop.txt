@@ -10,4 +10,4 @@ This is a simple client-side mod that contains:
 
 Every feature can be disabled or changed to your liking in the config.
 
-Suggest/report features and bugs through Github (homepage), preview images also available there.
+Suggest/report features and bugs here or https://github.com/CoreMod/HP-Awareness.
