@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
@@ -12,7 +14,7 @@ namespace HPAware
     {
         readonly Modconfig M = GetInstance<Modconfig>();
         readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
-        private float ShaderAlpha;
+        private float ShaderFade;
         public int PotionTimer;
         public int DebuffTimer;
         private int BarTimer;
@@ -29,13 +31,13 @@ namespace HPAware
                 if (!M.DisableHurtOverlay)
                 {
                     Filters.Scene.Activate(HurtOverlay);
-                    ShaderAlpha = 2f;
+                    ShaderFade = 1f;
                 }
                 else if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
-                if (!M.DisableHPBar)    //UI handles the rest
+                if (!M.DisableHPBar)
                 {
                     BarTimer = M.HPBarDelay;
                     BarAlpha = M.HPBarOpacity;
@@ -118,10 +120,12 @@ namespace HPAware
                 //Manipulate hurt shader
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
+                    float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
                     Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha);
-                    if (ShaderAlpha > 0)
+                    if (ShaderFade > 0)
                     {
-                        ShaderAlpha -= 0.1f;
+                        ShaderFade -= (float)Math.Round(M.HurtSpeed * 0.01, 2);     //Computers can't calculate decimals perfectly, so this rounds it to its intended value
+                        ShaderFade = (float)Math.Round(ShaderFade, 2);
                     }
                     if (ShaderAlpha <= 0 && M.HaveIntensity)
                     {
@@ -133,6 +137,7 @@ namespace HPAware
                 {
                     string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
                     Filters.Scene.Activate(LowOverlay);
+                    Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha);
                 }
                 else
                 {

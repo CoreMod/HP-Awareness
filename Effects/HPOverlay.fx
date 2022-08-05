@@ -35,7 +35,7 @@ float4 HPOverlay2(float2 coords : TEXCOORD0) : COLOR0
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.985 || coords.x <= 0.015 || coords.y <= 0.03 || coords.y >= 0.97)
     {
-        color.r += sin(3 * uTime) + 1;
+        color.r += (sin(3 * uTime) + 1) * uOpacity;
     }
     return color;
 }

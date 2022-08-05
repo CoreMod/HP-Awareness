@@ -29,22 +29,43 @@ namespace HPAware
         [DefaultValue("NewHPOverlay")]
         public string HurtOverlayType;
 
+        [Label("Overlay intensity")]
+        [Tooltip("Determines overlay color intensity\nHigher = More intense")]
+        [Range(0.1f, 2f)]
+        [Increment(0.1f)]
+        [DefaultValue(2f)]
+        public float HurtAlpha;
+
+        [Label("Overlay fade speed")]
+        [Tooltip("Determines how fast the overlay disappears\nHigher = Quicker")]
+        [Range(1, 10)]
+        [Slider]
+        [DefaultValue(6)]
+        public int HurtSpeed;
+
         [Label("Have variable intensity")]
-        [Tooltip("Hurt overlay's opacity and size fluctuates depending on how often you get hurt")]
+        [Tooltip("Hurt overlay's intensity fluctuates depending on how often you get hurt\nRecommended with higher intensity values")]
         public bool HaveIntensity;
 
         [Header("[i:29] Low HP Overlay")]   //--------------------------------
 
         [Label("Disable overlay for low health")]
-        [Tooltip("Whenever below a certain percentage of health, this overlay makes the edges of the screen red, fading in and out. Turn this on to disable it.")]
+        [Tooltip("Whenever below a certain percentage of health, this overlay makes the edges of the screen pulsate red. Turn this on to disable it.")]
         public bool DisableLowHpOverlay;
 
         [Label("Use Classic Low HP Overlay")]
         [Tooltip("Instead of a gradient, it is a single color")]
         public bool ClassicLowHpOverlay;
 
+        [Label("Overlay intensity")]
+        [Tooltip("Determines overlay color intensity\nHigher = More intense")]
+        [Range(0.1f, 1f)]
+        [Increment(0.1f)]
+        [DefaultValue(1f)]
+        public float LowHpAlpha;
+
         [Label("Disable Audio")]
-        [Tooltip("Whenever below a certain percentage of health, a high-pitched ding plays repeatedly. Turn this on to disable it.")]
+        [Tooltip("Whenever below a certain health %, a high-pitched ding plays repeatedly. Turn this on to disable it.")]
         [DefaultValue(true)]
         public bool DisableLowHpAudio;
 
@@ -68,12 +89,12 @@ namespace HPAware
         public int HPBarDelay;
 
         [Label("Bar Opacity")]
-        [Tooltip("Determines transparency of the bar")]
+        [Tooltip("Determines bar transparency")]
         [DefaultValue(1f)]
         public float HPBarOpacity;
 
         [Label("Icon Scale")]
-        [Tooltip("Determines size of the bar")]
+        [Tooltip("Determines bar size")]
         [Range(0.3f, 2f)]
         [Increment(0.1f)]
         [DefaultValue(1f)]
@@ -95,13 +116,13 @@ namespace HPAware
         public byte PotionOpacity;
 
         [Label("Icon Scale")]
-        [Tooltip("Determines size of the icon")]
+        [Tooltip("Determines icon size")]
         [Range(0.3f, 2f)]
         [Increment(0.1f)]
         [DefaultValue(1f)]
         public float PotionScale;
 
-        [Header("[i:2701] Debuff Pop Up\n(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, then check their config)")]  //--------------------------------
+        [Header("[i:2701] Debuff Pop Up\n(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, check their config)")]  //--------------------------------
 
         [Label("Disable Debuff Pop Ups")]
         [Tooltip("When you get a debuff, the debuff's icon(s) will appear above the player for a second. Turn this on to disable it.")]
@@ -120,7 +141,7 @@ namespace HPAware
         public byte BuffOpacity;
 
         [Label("Icon Scale")]
-        [Tooltip("Determines size of the icon(s)")]
+        [Tooltip("Determines icon size(s)")]
         [Range(0.3f, 2f)]
         [Increment(0.1f)]
         [DefaultValue(1f)]

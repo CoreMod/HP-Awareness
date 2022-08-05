@@ -8,6 +8,6 @@ This is a simple client-side mod that contains:
 
 -Debuff indicators above you whenever you obtain a debuff
 
-Every feature can be disabled or changed to your liking in the config.
+Every feature can be disabled or altered to your liking in the config.
 
-Suggest/report features and bugs through Github (homepage), preview images also available there.
+Suggest/report features and bugs on the Steam page, preview images are also available there.
