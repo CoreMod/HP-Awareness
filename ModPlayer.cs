@@ -87,6 +87,7 @@ namespace HPAware
                 {
                     GetInstance<HPAwareSystem>().HideDebuff();
                 }
+
                 //Show potion UI
                 if (Player.potionDelay == 1)
                 {
@@ -132,22 +133,37 @@ namespace HPAware
                         Filters.Scene[HurtOverlay].Deactivate();
                     }
                 }
+
                 //Show Low HP shader
                 if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
                 {
                     string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
                     Filters.Scene.Activate(LowOverlay);
-                    Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha);
+                    Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash);
                 }
                 else
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
-                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && Main.GameUpdateCount % 35 == 0 && !M.DisableLowHpAudio)
+                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
                 {
-                    SoundEngine.PlaySound(LowBeat);
+                    SoundStyle SoundToUse = Bell;       //Default
+                    switch (M.LowHpSound)
+                    {
+                        case "Heartbeat":
+                            SoundToUse = Heartbeat;
+                            break;
+                        case "Mana Chirp":
+                            SoundToUse = ManaChirp;
+                            break;
+                        case "Click":
+                            SoundToUse = Click;
+                            break;
+                    }
+                    SoundEngine.PlaySound(SoundToUse);
                 }
+
                 //Manage HP bar
                 if (BarTimer > 0)
                 {
@@ -161,6 +177,7 @@ namespace HPAware
                 {
                     GetInstance<HPAwareSystem>().HideHPBar();
                 }
+
                 //Hide Moon Lord shader
                 if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
                 {
@@ -187,6 +204,7 @@ namespace HPAware
 
         public override void UpdateDead()
         {
+            //Disable every UI and overlay on death
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
                 Filters.Scene["HPOverlay2"].Deactivate();
@@ -210,10 +228,26 @@ namespace HPAware
             Pitch = 0.3f
         };
 
-        public static readonly SoundStyle LowBeat = new("Terraria/Sounds/Item_35")
+        //Low HP sound effects
+        public static readonly SoundStyle Bell = new("Terraria/Sounds/Item_35")
         {
             Volume = 1f,
             Pitch = 0.8f
+        };
+        public static readonly SoundStyle Heartbeat = new("Terraria/Sounds/Custom/deerclops_step")
+        {
+            Volume = 1f,
+            Pitch = -1f
+        };
+        public static readonly SoundStyle ManaChirp = new("Terraria/Sounds/MaxMana")
+        {
+            Volume = 1f,
+            Pitch = -0.6f
+        };
+        public static readonly SoundStyle Click = new("Terraria/Sounds/Drip_1")
+        {
+            Volume = 1f,
+            Pitch = 0.5f
         };
     }
 }

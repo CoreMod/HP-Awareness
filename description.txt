@@ -1,6 +1,6 @@
 This is a simple client-side mod that contains:
 
--Hurt and low HP overlays + optional audio indicator
+-Hurt and low HP/Health overlays + optional audio indicator
 
 -Player HP bar
 

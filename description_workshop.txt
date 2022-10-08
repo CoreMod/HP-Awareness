@@ -1,13 +1,10 @@
 This is a simple client-side mod that contains:
-
--Hurt and low HP overlays + optional audio indicator
-
--Player HP bar
-
--Audio and visual indicator above you whenever potion sickness wears off
-
--Debuff indicators above you whenever you obtain a debuff
-
+[list]
+    [*]Hurt and low HP/Health overlays + optional audio indicator
+    [*]Player HP bar
+    [*]Audio and visual indicator above you whenever potion sickness wears off
+    [*]Debuff indicators above you whenever you obtain a debuff
+[/list]
 Every feature can be disabled or altered to your liking in the config.
 
 Suggest/report features and bugs here or see the source code at https://github.com/CoreMod/HP-Awareness.

@@ -30,7 +30,7 @@ float4 NewHPOverlay(float2 coords : TEXCOORD0) : COLOR0
 float4 NewHPOverlay2(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    color.r += (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40)) * (sin(4 * uTime) + 1) * uOpacity;
+    color.r += (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40)) * (sin(uIntensity * uTime) + 1) * uOpacity;
     return color;
 }
 
