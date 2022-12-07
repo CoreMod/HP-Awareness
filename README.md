@@ -22,8 +22,8 @@ This is a simple client-side mod for Terraria that contains several features:
 </Details>
 
 <Details>
-  <Summary>Take a look at the config</Summary>
-  <img src="https://steamuserimages-a.akamaihd.net/ugc/1856043445673607782/605C15B16450532287B27CF88B226C26EFD47A29/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false">
+  <Summary>Take a look at the config (for 1.4)</Summary>
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/1885345924643762598/B629BA945946A3A5FBA720141FF6483FEB233AF5/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=#000000&letterbox=false">
 </Details>
 
-[You can find the 1.4 Steam page here](https://steamcommunity.com/sharedfiles/filedetails/?id=2564503881), 1.3 version can be found on the mod browser
+[You can find the 1.4 Steam page here](https://steamcommunity.com/sharedfiles/filedetails/?id=2564503881), 1.3 version can be found on the mod browser (and no longer supported)
