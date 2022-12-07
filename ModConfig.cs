@@ -19,11 +19,11 @@ namespace HPAware
         [Header("[i:29] Hurt Overlay")]     //--------------------------------
 
         [Label("Disable Overlay for Getting Hit")]
-        [Tooltip("When damaged, overlay makes the edges of the screen red before quickly disappearing\nCheck the box to disable")]
+        [Tooltip("When damaged, overlay makes the edges of the screen red before quickly disappearing\nCheck the box to disable\nOnly visible in color/white lighting mode")]
         public bool DisableHurtOverlay;
 
         [Label("Overlay to use")]
-        [Tooltip("Determines overlay type \nHPOverlay - Single color, covers screen edges\nNew - Gradient, covers screen edges\nFlat - Single color, fills screen")]
+        [Tooltip("Determines overlay type \nHPOverlay - Single color, covers screen edges\nNew - Gradient, covers screen edges\nFlat - Single color, fills screen, default for retro/trippy lighting\nOnly visible in color/white lighting mode")]
         [OptionStrings(new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" })]
         [SliderColor(255, 0, 0)]
         [DrawTicks]
@@ -35,7 +35,7 @@ namespace HPAware
         [Range(0.1f, 2f)]
         [Increment(0.1f)]
         [SliderColor(0, 0, 255)]
-        [DefaultValue(2f)]
+        [DefaultValue(1.5f)]
         public float HurtAlpha;
 
         [Label("Overlay fade speed")]
@@ -46,14 +46,14 @@ namespace HPAware
         [DefaultValue(6)]
         public int HurtSpeed;
 
-        [Label("Have variable intensity")]
+        [Label("Use variable intensity")]
         [Tooltip("Hurt overlay's intensity fluctuates depending on how often you get hurt\nRecommended with higher intensity values")]
         public bool HaveIntensity;
 
         [Header("[i:29] Low HP Overlay")]   //--------------------------------
 
         [Label("Disable overlay for low health")]
-        [Tooltip("Whenever below a certain percentage of health, overlay makes the edges of the screen pulsate red\nCheck the box to disable")]
+        [Tooltip("When active, overlay makes the edges of the screen pulsate red\nCheck the box to disable\nOnly visible in color/white lighting mode")]
         public bool DisableLowHpOverlay;
 
         [Label("Use Classic Low HP Overlay")]
@@ -77,7 +77,7 @@ namespace HPAware
         public float LowHpFlash;
 
         [Label("Disable Audio")]
-        [Tooltip("Whenever below a certain health %, a high-pitched ding plays repeatedly\nCheck the box to disable")]
+        [Tooltip("When active, a sound plays repeatedly\nCheck the box to disable")]
         [DefaultValue(true)]
         public bool DisableLowHpAudio;
 

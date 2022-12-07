@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +30,7 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
-                string HurtOverlay = GetInstance<Modconfig>().HurtOverlayType;
+                string HurtOverlay = M.HurtOverlayType;
                 if (!M.DisableHurtOverlay)
                 {
                     Filters.Scene.Activate(HurtOverlay);
@@ -117,13 +120,13 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
-                string HurtOverlay = GetInstance<Modconfig>().HurtOverlayType;
+                string HurtOverlay = M.HurtOverlayType;
                 //Manipulate hurt shader
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
                     Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha);
-                    if (ShaderFade > 0)
+                    if (ShaderFade > 0f)
                     {
                         ShaderFade -= (float)Math.Round(M.HurtSpeed * 0.01, 2);     //Computers can't calculate decimals perfectly, so this rounds it to its intended value
                         ShaderFade = (float)Math.Round(ShaderFade, 2);
@@ -198,6 +201,19 @@ namespace HPAware
                 else if (M.ClassicLowHpOverlay && Filters.Scene["NewHPOverlay2"].IsActive())
                 {
                     Filters.Scene["NewHPOverlay2"].Deactivate();
+                }
+            }
+        }
+
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
+            {
+                if (ShaderFade > 0 && !Lighting.NotRetro && drawInfo.shadow == 0f && !M.DisableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate (Uses flat shader)
+                {
+                    float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
+                    Color Col = new(ShaderAlpha, 0f, 0f, 0f);
+                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new(0, 0, Main.screenWidth, Main.screenHeight), Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
                 }
             }
         }
