@@ -19,11 +19,11 @@ namespace HPAware
         [Header("[i:29] Hurt Overlay")]     //--------------------------------
 
         [Label("Disable Overlay for Getting Hit")]
-        [Tooltip("When damaged, overlay makes the edges of the screen red before quickly disappearing\nCheck the box to disable\nOnly visible in color/white lighting mode")]
+        [Tooltip("When damaged, overlay makes the edges of the screen red before quickly disappearing\nCheck the box to disable")]
         public bool DisableHurtOverlay;
 
         [Label("Overlay to use")]
-        [Tooltip("Determines overlay type \nHPOverlay - Single color, covers screen edges\nNew - Gradient, covers screen edges\nFlat - Single color, fills screen, default for retro/trippy lighting\nOnly visible in color/white lighting mode")]
+        [Tooltip("Determines overlay type \nHPOverlay - Single color, covers screen edges (Retro/trippy lighting default)\nNew - Gradient, covers screen edges (Color/white lighting mode only)\nFlat - Single color, fills screen")]
         [OptionStrings(new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" })]
         [SliderColor(255, 0, 0)]
         [DrawTicks]
@@ -47,17 +47,17 @@ namespace HPAware
         public int HurtSpeed;
 
         [Label("Use variable intensity")]
-        [Tooltip("Hurt overlay's intensity fluctuates depending on how often you get hurt\nRecommended with higher intensity values")]
+        [Tooltip("Hurt overlay's intensity fluctuates depending on how often you get hurt\nRecommended with higher intensity values\nColor/white lighting mode only")]
         public bool HaveIntensity;
 
         [Header("[i:29] Low HP Overlay")]   //--------------------------------
 
         [Label("Disable overlay for low health")]
-        [Tooltip("When active, overlay makes the edges of the screen pulsate red\nCheck the box to disable\nOnly visible in color/white lighting mode")]
+        [Tooltip("When active, overlay makes the edges of the screen pulsate red\nCheck the box to disable")]
         public bool DisableLowHpOverlay;
 
         [Label("Use Classic Low HP Overlay")]
-        [Tooltip("Instead of a gradient, it is a single color")]
+        [Tooltip("Instead of a gradient, it is a single color\nRetro/trippy lighting default")]
         public bool ClassicLowHpOverlay;
 
         [Label("Overlay intensity")]

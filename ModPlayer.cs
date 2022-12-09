@@ -207,13 +207,27 @@ namespace HPAware
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
+            if (!Main.dedServ && Main.myPlayer == Player.whoAmI && !Lighting.NotRetro && drawInfo.shadow == 0f && !Player.DeadOrGhost)
             {
-                if (ShaderFade > 0 && !Lighting.NotRetro && drawInfo.shadow == 0f && !M.DisableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate (Uses flat shader)
+                if (ShaderFade > 0 && !M.DisableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate
                 {
+                    string HurtOverlay = M.HurtOverlayType;
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
                     Color Col = new(ShaderAlpha, 0f, 0f, 0f);
-                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new(0, 0, Main.screenWidth, Main.screenHeight), Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                    switch (HurtOverlay)
+                    {
+                        case "HPOverlayFlat":
+                            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, new(0, 0, Main.screenWidth, Main.screenHeight), Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                            break;
+                        default:
+                            DrawBorders(0.08, 0.03, Col);
+                            break;
+                    }
+                }
+                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
+                {
+                    Color Col = new Color((float)((Math.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha), 0f, 0f, 0f);
+                    DrawBorders(0.03, 0.015, Col);
                 }
             }
         }
@@ -223,6 +237,7 @@ namespace HPAware
             //Disable every UI and overlay on death
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
+                ShaderFade = 0f;
                 Filters.Scene["HPOverlay2"].Deactivate();
                 Filters.Scene["NewHPOverlay2"].Deactivate();
                 foreach (string Overlay in HurtTypes)
@@ -236,6 +251,17 @@ namespace HPAware
                 GetInstance<HPAwareSystem>().HidePotion();
                 GetInstance<HPAwareSystem>().HideHPBar();
             }
+        }
+
+        private static void DrawBorders(double TopHeight, double SideWidth, Color Col)
+        {
+            Rectangle TopRect = new(0, 0, Main.screenWidth, (int)(Main.screenHeight * TopHeight));
+            Rectangle SideRect = new(0, 0, (int)(Main.screenWidth * SideWidth), Main.screenHeight - TopRect.Height);
+            Rectangle BottomRect = new(0, 0, Main.screenWidth - (SideRect.Width * 2), TopRect.Height);
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                                 //Top row
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, SideRect.BottomRight(), BottomRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                    //Bottom row
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomLeft(), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                        //Left column
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomRight() - new Vector2(SideRect.Width, 0f), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);     //Right column
         }
 
         public static readonly SoundStyle PotionRdySnd = new("Terraria/Sounds/Item_3")
