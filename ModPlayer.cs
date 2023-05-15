@@ -207,7 +207,7 @@ namespace HPAware
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            if (!Main.dedServ && Main.myPlayer == Player.whoAmI && !Lighting.NotRetro && drawInfo.shadow == 0f && !Player.DeadOrGhost)
+            if (!Main.dedServ && !Main.gameMenu && Main.myPlayer == Player.whoAmI && !Lighting.NotRetro && drawInfo.shadow == 0f && !Player.DeadOrGhost)
             {
                 if (ShaderFade > 0 && !M.DisableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate
                 {
@@ -256,12 +256,12 @@ namespace HPAware
         private static void DrawBorders(double TopHeight, double SideWidth, Color Col)
         {
             Rectangle TopRect = new(0, 0, Main.screenWidth, (int)(Main.screenHeight * TopHeight));
-            Rectangle SideRect = new(0, 0, (int)(Main.screenWidth * SideWidth), Main.screenHeight - TopRect.Height);
-            Rectangle BottomRect = new(0, 0, Main.screenWidth - (SideRect.Width * 2), TopRect.Height);
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                                 //Top row
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, SideRect.BottomRight(), BottomRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                    //Bottom row
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomLeft(), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                        //Left column
-            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomRight() - new Vector2(SideRect.Width, 0f), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);     //Right column
+            Rectangle SideRect = new(0, 0, (int)(Main.screenWidth * SideWidth), Main.screenHeight - (TopRect.Height * 2));
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero + Main.GameViewMatrix.Translation, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                                 //Top row
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, SideRect.BottomLeft() + new Vector2(0f, TopRect.Height) - Main.GameViewMatrix.Translation, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);      //Bottom row
+            SideRect.Height = (int)((Main.screenHeight - TopRect.Height * 2) - (int)(Main.GameViewMatrix.Translation.Y * 2));
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomLeft() + Main.GameViewMatrix.Translation, SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);      //Left column
+            Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomRight() - new Vector2(SideRect.Width, 0f) + new Vector2(-Main.GameViewMatrix.Translation.X, Main.GameViewMatrix.Translation.Y), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);     //Right column
         }
 
         public static readonly SoundStyle PotionRdySnd = new("Terraria/Sounds/Item_3")
