@@ -11,3 +11,7 @@ This is a simple client-side mod that contains:
 Every feature can be disabled or altered to your liking in the config.
 
 Suggest/report features and bugs on the Steam page, preview images are also available there.
+
+
+1.0.2.3
+-Retro/trippy lighting overlays now scale with zoom and no longer draws on menu

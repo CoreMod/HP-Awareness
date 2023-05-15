@@ -26,7 +26,7 @@ namespace HPAware
         public int DebuffToShow;
         public List<int> DebuffsToShow = new();
 
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void PostHurt(Player.HurtInfo info)
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
@@ -226,7 +226,7 @@ namespace HPAware
                 }
                 if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
                 {
-                    Color Col = new Color((float)((Math.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha), 0f, 0f, 0f);
+                    Color Col = new((float)((Math.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha), 0f, 0f, 0f);
                     DrawBorders(0.03, 0.015, Col);
                 }
             }
