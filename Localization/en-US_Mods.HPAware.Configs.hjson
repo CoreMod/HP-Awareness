@@ -1,0 +1,266 @@
+Modconfig: {
+	DisplayName: Configuration
+
+	Headers: {
+		Hurt: "[i:29] Hurt Overlay"
+		Low: "[i:29] Low HP Overlay"
+		Bar: "[i:705] Player HP Bar"
+		Potion: "[i:28] Potion Pop Up"
+		Debuff:
+			'''
+			[i:2701] Debuff Pop Up
+			(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, check their config)
+			'''
+	}
+
+	DisableMLShader: {
+		Label: Disable Moon Lord Shader
+		Tooltip:
+			'''
+			Moon Lord's shader may cause the 2 overlays below to be invisible
+			Check the box to disable
+			'''
+	}
+
+	DisableHurtOverlay: {
+		Label: Disable Overlay for Getting Hit
+		Tooltip:
+			'''
+			When damaged, overlay makes the edges of the screen red before quickly disappearing
+			Check the box to disable
+			'''
+	}
+
+	HurtOverlayType: {
+		Label: Overlay to use
+		Tooltip:
+			'''
+			Determines overlay type 
+			HPOverlay - Single color, covers screen edges (Retro/trippy lighting default)
+			New - Gradient, covers screen edges (Color/white lighting mode only)
+			Flat - Single color, fills screen
+			'''
+	}
+
+	HurtAlpha: {
+		Label: Overlay intensity
+		Tooltip:
+			'''
+			Determines overlay color intensity
+			Higher = More intense
+			'''
+	}
+
+	HurtSpeed: {
+		Label: Overlay fade speed
+		Tooltip:
+			'''
+			Determines how fast the overlay disappears
+			Higher = Quicker
+			'''
+	}
+
+	HaveIntensity: {
+		Label: Use variable intensity
+		Tooltip:
+			'''
+			Hurt overlay's intensity fluctuates depending on how often you get hurt
+			Recommended with higher intensity values
+			Color/white lighting mode only
+			'''
+	}
+
+	DisableLowHpOverlay: {
+		Label: Disable overlay for low health
+		Tooltip:
+			'''
+			When active, overlay makes the edges of the screen pulsate red
+			Check the box to disable
+			'''
+	}
+
+	ClassicLowHpOverlay: {
+		Label: Use Classic Low HP Overlay
+		Tooltip:
+			'''
+			Instead of a gradient, it is a single color
+			Retro/trippy lighting default
+			'''
+	}
+
+	LowHpAlpha: {
+		Label: Overlay intensity
+		Tooltip:
+			'''
+			Determines overlay color intensity
+			Higher = More intense
+			'''
+	}
+
+	LowHpFlash: {
+		Label: Overlay flashing rate
+		Tooltip:
+			'''
+			Determines rate of flashing
+			Higher = More flashing
+			'''
+	}
+
+	DisableLowHpAudio: {
+		Label: Disable Audio
+		Tooltip:
+			'''
+			When active, a sound plays repeatedly
+			Check the box to disable
+			'''
+	}
+
+	LowHpSound: {
+		Label: Sound to use
+		Tooltip: Determines sound
+	}
+
+	LowHpSdFreq: {
+		Label: Sound frequency
+		Tooltip:
+			'''
+			Determines how often the sound plays (in ticks)
+			Lower = More often
+			60 ticks = 1 second
+			'''
+	}
+
+	Overlaytrigger: {
+		Label: Low HP Percentage
+		Tooltip: Having HP lower or equal to this percentage activates overlay & sound
+	}
+
+	DisableHPBar: {
+		Label: Disable player HP bar
+		Tooltip:
+			'''
+			When damaged, this appears below you much like every other HP bar
+			Check the box to disable
+			'''
+	}
+
+	HPBarDelay: {
+		Label: Bar Delay
+		Tooltip:
+			'''
+			Determines how long it lingers before disappearing (in ticks)
+			60 ticks = 1 second
+			'''
+	}
+
+	HPBarOpacity: {
+		Label: Bar Opacity
+		Tooltip: Determines bar transparency
+	}
+
+	HPBarScale: {
+		Label: Icon Scale
+		Tooltip: Determines bar size
+	}
+
+	DisablePSAudio: {
+		Label: Disable Potion Sickness Audio
+		Tooltip:
+			'''
+			Plays a higher-pitched potion-drink sound effect when potion sickness disappears
+			Check the box to disable
+			'''
+	}
+
+	DisablePSVisual: {
+		Label: Disable Potion Sickness Visual
+		Tooltip:
+			'''
+			A potion icon will appear above the player when potion sickness disappears
+			Check the box to disable
+			'''
+	}
+
+	PotionOpacity: {
+		Label: Icon Opacity
+		Tooltip:
+			'''
+			Determines transparency of the icon
+			255 = Fully visible
+			0 = Invisible
+			'''
+	}
+
+	PotionScale: {
+		Label: Icon Scale
+		Tooltip: Determines icon size
+	}
+
+	DisableBuffVisual: {
+		Label: Disable Debuff Pop Ups
+		Tooltip:
+			'''
+			When you get a debuff, the debuff's icon(s) will appear above the player for a second
+			Check the box to disable
+			'''
+	}
+
+	BuffLayout: {
+		Label: Layout to use
+		Tooltip:
+			'''
+			Determines icon layout
+			Most recent only - shows the most recently gained debuff
+			Other two show every current debuff in an orientation
+			'''
+	}
+
+	BuffOpacity: {
+		Label: Icon Opacity
+		Tooltip:
+			'''
+			Determines transparency of the icon(s)
+			255 = Fully visible
+			0 = Invisible
+			'''
+	}
+
+	BuffScale: {
+		Label: Icon Scale
+		Tooltip: Determines icon size(s)
+	}
+
+	DebuffBL: {
+		Label: Debuff Blacklist
+		Tooltip:
+			'''
+			Any debuffs in this list will NOT have a pop up (See next page for options)
+			Reload mods for best effects
+			'''
+	}
+}
+
+NBuffList: {
+	DisplayName: Debuff List
+	Headers.List:
+		'''
+		Copy & paste desired debuffs below over to blacklist.
+		Must be in-world to view, use restore defaults to refresh list.
+		Interact w/ textbox to use copy & paste.
+		Check "HPAware_NBuffList" file in your Mod Configs folder for better list view (make & save any changes for it to appear/update first).
+		'''
+
+	DebuffList: {
+		Label: Debuffs
+		Tooltip: ""
+	}
+}
+
+DebuffList: {
+	Debuffs: {
+		Tooltip: ""
+		Label: Debuffs
+	}
+
+	Tooltip: ""
+}
