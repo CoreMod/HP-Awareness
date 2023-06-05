@@ -57,27 +57,35 @@ namespace HPAware
                 if (!M.DisableBuffVisual)
                 {
                     //Show debuff UI
-                    for (int i = 0; i < BuffLoader.BuffCount; i++)
+                    foreach (string BLDebuff in M.DebuffBL)     //Adds config debuffs into list
                     {
-                        foreach (string BLDebuff in M.DebuffBL)
+                        if (BuffID.Search.TryGetId(BLDebuff, out int ID))
                         {
-                            if (i != 0 && BuffID.Search.GetName(i) == BLDebuff && !Debuffs.Contains(i))      //Check prevents modded buffs from being added into list if said mod is unloaded
+                            if (!Debuffs.Contains(ID))
                             {
-                                Debuffs.Add(i);     //Prevents debuff from being shown due to it already being in the list when checked later (List takes IDs instead of keys)
+                                Debuffs.Add(ID);
                             }
                         }
-                        if (Main.LocalPlayer.HasBuff(i) && Main.debuff[i] && !Debuffs.Contains(i))
+                    }
+                    for (int i = 0; i < Player.buffType.Length; i++)        //Checks if player has gotten a new debuff
+                    {
+                        int Type = Player.buffType[i];
+                        int Time = Player.buffTime[i];
+                        if (Main.debuff[Type] && Time > 0 && !Debuffs.Contains(Type))
                         {
-                            DebuffToShow = i;
-                            DebuffsToShow.Add(i);
+                            DebuffToShow = Type;
+                            Debuffs.Add(Type);
+                            DebuffsToShow.Add(Type);
                             GetInstance<HPAwareSystem>().ShowDebuff();
                             DebuffTimer = 60;
-                            Debuffs.Add(i);
                         }
-                        else if (!Main.LocalPlayer.HasBuff(i) && Debuffs.Contains(i))
+                    }
+                    for (int i = 0; i < Debuffs.Count; i++)       //Removes debuffs player no longer has from lists (Self Note: Don't use foreach)
+                    {
+                        if (!Main.LocalPlayer.HasBuff(Debuffs[i]))
                         {
-                            Debuffs.Remove(i);
-                            DebuffsToShow.Remove(i);
+                            DebuffsToShow.Remove(Debuffs[i]);
+                            Debuffs.Remove(Debuffs[i]);
                         }
                     }
                 }
