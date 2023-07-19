@@ -109,9 +109,9 @@ namespace HPAware
         [Tooltip("When damaged, this appears below you much like every other HP bar\nCheck the box to disable")]
         public bool DisableHPBar;
 
-        [Label("Bar Delay")]
-        [Tooltip("Determines how long it lingers before disappearing (in ticks)\n60 ticks = 1 second")]
-        [Range(0, 600)]
+        [Label("Bar Duration")]
+        [Tooltip("Determines how long it lingers on screen (in ticks)\n60 ticks = 1 second")]
+        [Range(10, 600)]
         [Slider]
         [Increment(10)]
         [SliderColor(0, 0, 255)]
@@ -142,6 +142,15 @@ namespace HPAware
         [Tooltip("A potion icon will appear above the player when potion sickness disappears\nCheck the box to disable")]
         public bool DisablePSVisual;
 
+        [Label("Visual Duration")]
+        [Tooltip("Determines how long icon lingers on screen (in ticks)\n60 ticks = 1 second")]
+        [Range(10, 180)]
+        [Slider]
+        [Increment(10)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(60)]
+        public int PotionDelay;
+
         [Label("Icon Opacity")]
         [Tooltip("Determines transparency of the icon\n255 = Fully visible\n0 = Invisible")]
         [SliderColor(0, 0, 255)]
@@ -169,6 +178,20 @@ namespace HPAware
         [DrawTicks]
         [DefaultValue("Vertical")]
         public string BuffLayout;
+
+        [Label("Disable Showing Debuff Duration")]
+        [Tooltip("Debuff icons will have their duration placed on top of them\nCheck the box to disable")]
+        [DefaultValue(true)]
+        public bool DisableBuffTimer;
+
+        [Label("Icon Duration")]
+        [Tooltip("Determines how long icon(s) linger on screen (in ticks)\n60 ticks = 1 second")]
+        [Range(10, 300)]
+        [Slider]
+        [Increment(10)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(60)]
+        public int BuffDelay;
 
         [Label("Icon Opacity")]
         [Tooltip("Determines transparency of the icon(s)\n255 = Fully visible\n0 = Invisible")]

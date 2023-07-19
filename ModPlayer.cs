@@ -77,12 +77,12 @@ namespace HPAware
                             Debuffs.Add(Type);
                             DebuffsToShow.Add(Type);
                             GetInstance<HPAwareSystem>().ShowDebuff();
-                            DebuffTimer = 60;
+                            DebuffTimer = M.BuffDelay;
                         }
                     }
                     for (int i = 0; i < Debuffs.Count; i++)       //Removes debuffs player no longer has from lists (Self Note: Don't use foreach)
                     {
-                        if (!Main.LocalPlayer.HasBuff(Debuffs[i]))
+                        if (!Player.HasBuff(Debuffs[i]))
                         {
                             DebuffsToShow.Remove(Debuffs[i]);
                             Debuffs.Remove(Debuffs[i]);
@@ -109,7 +109,7 @@ namespace HPAware
                     if (!M.DisablePSVisual)
                     {
                         GetInstance<HPAwareSystem>().ShowPotion();
-                        PotionTimer = 60;
+                        PotionTimer = M.PotionDelay;
                     }
                 }
                 //Hide potion UI
@@ -267,7 +267,7 @@ namespace HPAware
             Rectangle SideRect = new(0, 0, (int)(Main.screenWidth * SideWidth), Main.screenHeight - (TopRect.Height * 2));
             Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, Vector2.Zero + Main.GameViewMatrix.Translation, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);                                                 //Top row
             Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, SideRect.BottomLeft() + new Vector2(0f, TopRect.Height) - Main.GameViewMatrix.Translation, TopRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);      //Bottom row
-            SideRect.Height = (int)((Main.screenHeight - TopRect.Height * 2) - (int)(Main.GameViewMatrix.Translation.Y * 2));
+            SideRect.Height = (Main.screenHeight - TopRect.Height * 2) - (int)(Main.GameViewMatrix.Translation.Y * 2);
             Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomLeft() + Main.GameViewMatrix.Translation, SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);      //Left column
             Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, TopRect.BottomRight() - new Vector2(SideRect.Width, 0f) + new Vector2(-Main.GameViewMatrix.Translation.X, Main.GameViewMatrix.Translation.Y), SideRect, Col, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);     //Right column
         }
