@@ -145,10 +145,10 @@ Modconfig: {
 	}
 
 	HPBarDelay: {
-		Label: Bar Delay
+		Label: Bar Duration
 		Tooltip:
 			'''
-			Determines how long it lingers before disappearing (in ticks)
+			Determines how long it lingers on screen (in ticks)
 			60 ticks = 1 second
 			'''
 	}
@@ -178,6 +178,15 @@ Modconfig: {
 			'''
 			A potion icon will appear above the player when potion sickness disappears
 			Check the box to disable
+			'''
+	}
+
+	PotionDelay: {
+		Label: Visual Duration
+		Tooltip:
+			'''
+			Determines how long icon lingers on screen (in ticks)
+			60 ticks = 1 second
 			'''
 	}
 
@@ -212,6 +221,24 @@ Modconfig: {
 			Determines icon layout
 			Most recent only - shows the most recently gained debuff
 			Other two show every current debuff in an orientation
+			'''
+	}
+
+	DisableBuffTimer: {
+		Label: Disable Showing Debuff Duration
+		Tooltip:
+			'''
+			Debuff icons will have their duration placed on top of them
+			Check the box to disable
+			'''
+	}
+
+	BuffDelay: {
+		Label: Icon Duration
+		Tooltip:
+			'''
+			Determines how long icon(s) linger on screen (in ticks)
+			60 ticks = 1 second
 			'''
 	}
 

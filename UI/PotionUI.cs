@@ -17,17 +17,17 @@ namespace HPAware.UI
                 Vector2 Position = new(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
                 Vector2 Offset = new(10, 40);
                 Color Opacity = new(M.PotionOpacity, M.PotionOpacity, M.PotionOpacity, M.PotionOpacity);
-                if (Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffTimer > 0)     //Checking UI with isVisible doesn't work, sad
+                if (Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffTimer > 0)     //Checks that debuff UI is active, checking UI with isVisible doesn't work, sad
                 {
                     if (M.BuffLayout == "Vertical")
                     {
-                        Offset.X = -5f;
+                        Offset.X = 35f;
                     }
                     else
                     {
                         Offset.Y /= M.PotionScale;      //Negates multiplication in Draw
                         Offset.Y *= M.BuffScale;        //Makes pos equal to buff icons
-                        Offset.Y += 30f;
+                        Offset.Y += (M.DisableBuffTimer || M.BuffLayout == "Most recent only") ? 30f : 30f + (25f * M.BuffScale);
                     }
                 }
                 if (Main.LocalPlayer.gravDir != 1f)

@@ -78,7 +78,7 @@ namespace HPAware
 
         public bool DisableHPBar;
 
-        [Range(0, 600)]
+        [Range(10, 600)]
         [Slider]
         [Increment(10)]
         [SliderColor(0, 0, 255)]
@@ -101,6 +101,13 @@ namespace HPAware
 
         public bool DisablePSVisual;
 
+        [Range(10, 180)]
+        [Slider]
+        [Increment(10)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(60)]
+        public int PotionDelay;
+
         [SliderColor(0, 0, 255)]
         [DefaultValue(255)]
         public byte PotionOpacity;
@@ -120,6 +127,16 @@ namespace HPAware
         [DrawTicks]
         [DefaultValue("Vertical")]
         public string BuffLayout;
+
+        [DefaultValue(true)]
+        public bool DisableBuffTimer;
+
+        [Range(10, 300)]
+        [Slider]
+        [Increment(10)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(60)]
+        public int BuffDelay;
 
         [SliderColor(0, 0, 255)]
         [DefaultValue(255)]

@@ -6,7 +6,7 @@ This is a simple client-side mod that contains:
 
 -Audio and visual indicator above you whenever potion sickness wears off
 
--Debuff indicators above you whenever you obtain a debuff
+-Debuff indicators above you whenever you obtain a debuff + optional duration indicator
 
 Every feature can be disabled or altered to your liking in the config.
 
