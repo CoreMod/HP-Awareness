@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using static Terraria.ModLoader.ModContent;
 
 namespace HPAware
 {
@@ -58,7 +59,7 @@ namespace HPAware
         [DefaultValue(true)]
         public bool DisableLowHpAudio;
 
-        [OptionStrings(new string[] { "Bell", "Heartbeat", "Mana Chirp", "Click" })]
+        [OptionStrings(new string[] { "Bell", "Heartbeat", "Mana Chirp", "Click", "Bell (No Pitch)" })]
         [SliderColor(255, 0, 0)]
         [DrawTicks]
         [DefaultValue("Bell")]
@@ -78,7 +79,7 @@ namespace HPAware
 
         public bool DisableHPBar;
 
-        [Range(10, 600)]
+        [Range(10, 610)]
         [Slider]
         [Increment(10)]
         [SliderColor(0, 0, 255)]
@@ -131,7 +132,7 @@ namespace HPAware
         [DefaultValue(true)]
         public bool DisableBuffTimer;
 
-        [Range(10, 300)]
+        [Range(10, 610)]
         [Slider]
         [Increment(10)]
         [SliderColor(0, 0, 255)]
@@ -152,6 +153,14 @@ namespace HPAware
         { "Campfire", "PeaceCandle", "HeartLamp", "CatBast",
             "StarInBottle", "PotionSickness", "ManaSickness",
             "Sunflower", "MonsterBanner", "Werewolf", "Merfolk" };
+
+        public override void OnChanged()
+        {
+            if (!Main.gameMenu)     //Called whenever config updates mid-game
+            {
+                GetInstance<BuffFlags>().UpdateBlacklistedDebuffs();
+            }
+        }
     }
 
     public class NBuffList : ModConfig

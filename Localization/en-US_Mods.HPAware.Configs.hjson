@@ -116,8 +116,12 @@ Modconfig: {
 	}
 
 	LowHpSound: {
-		Label: Sound to use
-		Tooltip: Determines sound
+		Label: "[i:5117] Sound to use"
+		Tooltip:
+			'''
+			Determines sound
+			See workshop page for custom sounds
+			'''
 	}
 
 	LowHpSdFreq: {
@@ -150,6 +154,7 @@ Modconfig: {
 			'''
 			Determines how long it lingers on screen (in ticks)
 			60 ticks = 1 second
+			Set to 610 ticks for infinite
 			'''
 	}
 
@@ -239,6 +244,7 @@ Modconfig: {
 			'''
 			Determines how long icon(s) linger on screen (in ticks)
 			60 ticks = 1 second
+			Set to 610 ticks for infinite
 			'''
 	}
 
@@ -273,8 +279,7 @@ NBuffList: {
 		'''
 		Copy & paste desired debuffs below over to blacklist.
 		Must be in-world to view, use restore defaults to refresh list.
-		Interact w/ textbox to use copy & paste.
-		Check "HPAware_NBuffList" file in your Mod Configs folder for better list view (make & save any changes for it to appear/update first).
+		For more info, find the debuff blacklist guide on this mod's Workshop page.
 		'''
 
 	DebuffList: {

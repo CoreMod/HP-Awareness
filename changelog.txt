@@ -1,0 +1,6 @@
+v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
+[list]
+[*]Slightly optimized code
+[*]Debuff and HP bar can be set to infinite
+[*]Added Bell (No Pitch) to Low HP hurt sound list. This is part of a workaround for custom sounds. See new guide in description for more info.
+[/list]

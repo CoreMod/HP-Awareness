@@ -22,9 +22,13 @@ namespace HPAware
         public int DebuffTimer;
         private int BarTimer;
         public float BarAlpha;
-        private readonly List<int> Debuffs = new();
         public int DebuffToShow;
-        public List<int> DebuffsToShow = new();
+        public List<int> DebuffsToShow = new(44);
+
+        public override void OnEnterWorld()
+        {
+            GetInstance<BuffFlags>().UpdateBlacklistedDebuffs();
+        }
 
         public override void PostHurt(Player.HurtInfo info)
         {
@@ -57,44 +61,32 @@ namespace HPAware
                 if (!M.DisableBuffVisual)
                 {
                     //Show debuff UI
-                    foreach (string BLDebuff in M.DebuffBL)     //Adds config debuffs into list
-                    {
-                        if (BuffID.Search.TryGetId(BLDebuff, out int ID))
-                        {
-                            if (!Debuffs.Contains(ID))
-                            {
-                                Debuffs.Add(ID);
-                            }
-                        }
-                    }
                     for (int i = 0; i < Player.buffType.Length; i++)        //Checks if player has gotten a new debuff
                     {
                         int Type = Player.buffType[i];
                         int Time = Player.buffTime[i];
-                        if (Main.debuff[Type] && Time > 0 && !Debuffs.Contains(Type))
+                        if (Main.debuff[Type] && Time > 0 && !DebuffsToShow.Contains(Type) && !GetInstance<BuffFlags>().DoNotShow[Type])
                         {
                             DebuffToShow = Type;
-                            Debuffs.Add(Type);
                             DebuffsToShow.Add(Type);
                             GetInstance<HPAwareSystem>().ShowDebuff();
                             DebuffTimer = M.BuffDelay;
                         }
                     }
-                    for (int i = 0; i < Debuffs.Count; i++)       //Removes debuffs player no longer has from lists (Self Note: Don't use foreach)
+                    for (int i = 0; i < DebuffsToShow.Count; i++)       //Removes debuffs player no longer has from lists (Self Note: Don't use foreach)
                     {
-                        if (!Player.HasBuff(Debuffs[i]))
+                        if (!Player.HasBuff(DebuffsToShow[i]))
                         {
-                            DebuffsToShow.Remove(Debuffs[i]);
-                            Debuffs.Remove(Debuffs[i]);
+                            DebuffsToShow.Remove(DebuffsToShow[i]);
                         }
                     }
                 }
                 //Hide debuff UI
-                if (DebuffTimer > 0)
+                if (DebuffTimer > 0 && DebuffTimer <= 600)  //600+ is infinite
                 {
                     DebuffTimer--;
                 }
-                if (DebuffTimer <= 0)
+                if (DebuffTimer <= 0 || DebuffsToShow.Count == 0)
                 {
                     GetInstance<HPAwareSystem>().HideDebuff();
                 }
@@ -171,12 +163,15 @@ namespace HPAware
                         case "Click":
                             SoundToUse = Click;
                             break;
+                        case "Bell (No Pitch)":
+                            SoundToUse = BellNoPitch;
+                            break;
                     }
                     SoundEngine.PlaySound(SoundToUse);
                 }
 
                 //Manage HP bar
-                if (BarTimer > 0)
+                if (BarTimer > 0 && BarTimer <= 600)  //600+ is infinite
                 {
                     BarTimer--;
                 }
@@ -240,7 +235,7 @@ namespace HPAware
             }
         }
 
-        public override void UpdateDead()
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {
             //Disable every UI and overlay on death
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
@@ -299,5 +294,31 @@ namespace HPAware
             Volume = 1f,
             Pitch = 0.5f
         };
+        public static readonly SoundStyle BellNoPitch = new("Terraria/Sounds/Item_35")      //Mostly here to be replaced by a resource pack
+        {
+            Volume = 1f,
+            PitchRange = (0f, 0f),
+            MaxInstances = 1
+        };
+    }
+
+    public class BuffFlags : GlobalBuff
+    {
+        public bool[] DoNotShow = new bool[BuffLoader.BuffCount];
+
+        /// <summary>
+        /// Takes config debuffs and flags them, preventing them from being shown
+        /// </summary>
+        public void UpdateBlacklistedDebuffs()
+        {
+            DoNotShow = new bool[BuffLoader.BuffCount];
+            foreach (string BLDebuff in GetInstance<Modconfig>().DebuffBL)     //Adds config debuffs into list
+            {
+                if (BuffID.Search.TryGetId(BLDebuff, out int ID))
+                {
+                    GetInstance<BuffFlags>().DoNotShow[ID] = true;
+                }
+            }
+        }
     }
 }
