@@ -312,7 +312,7 @@ namespace HPAware
         public void UpdateBlacklistedDebuffs()
         {
             DoNotShow = new bool[BuffLoader.BuffCount];
-            foreach (string BLDebuff in GetInstance<Modconfig>().DebuffBL)     //Adds config debuffs into list
+            foreach (string BLDebuff in GetInstance<Modconfig>().DebuffBL)
             {
                 if (BuffID.Search.TryGetId(BLDebuff, out int ID))
                 {
