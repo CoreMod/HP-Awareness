@@ -1,4 +1,4 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
 [list]
-[*]Removed unused files
+[*]Updated asset code for new tmod changes
 [/list]

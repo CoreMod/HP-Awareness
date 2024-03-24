@@ -15,8 +15,8 @@ namespace HPAware
 {
     public class Modplayer : ModPlayer
     {
-        readonly Modconfig M = GetInstance<Modconfig>();
-        readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
+        private readonly Modconfig M = GetInstance<Modconfig>();
+        private readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
         private float ShaderFade;
         public int PotionTimer;
         public int DebuffTimer;

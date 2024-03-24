@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
@@ -8,7 +9,17 @@ namespace HPAware.UI
 {
     internal class PotionUI : UIState
     {
-        readonly Modconfig M = GetInstance<Modconfig>();
+        private readonly Modconfig M = GetInstance<Modconfig>();
+
+        private static Asset<Texture2D> Sprite;
+
+        public override void OnActivate()
+        {
+            if (Sprite == null)
+            {
+                Sprite = Request<Texture2D>("HPAware/UI/PotionReady");
+            }
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -35,7 +46,7 @@ namespace HPAware.UI
                     Position.Y = (2 * Main.screenPosition.Y) + (float)Main.screenHeight - Position.Y;
                     Offset.Y += 40f / M.PotionScale;
                 }
-                spriteBatch.Draw(Request<Texture2D>("HPAware/UI/PotionReady").Value, Position - Main.screenPosition - (Offset * M.PotionScale), new Rectangle(0, 0, 28, 30), Opacity, 0f, Vector2.Zero, M.PotionScale, SpriteEffects.None, 1f);
+                spriteBatch.Draw(Sprite.Value, Position - Main.screenPosition - (Offset * M.PotionScale), new Rectangle(0, 0, 28, 30), Opacity, 0f, Vector2.Zero, M.PotionScale, SpriteEffects.None, 1f);
             }
         }
     }

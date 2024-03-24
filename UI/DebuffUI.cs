@@ -10,7 +10,7 @@ namespace HPAware.UI
 {
     internal class DebuffUI : UIState
     {
-        readonly Modconfig M = GetInstance<Modconfig>();
+        private readonly Modconfig M = GetInstance<Modconfig>();
 
         public override void Draw(SpriteBatch spriteBatch)
         {
