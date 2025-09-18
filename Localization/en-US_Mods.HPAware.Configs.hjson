@@ -269,7 +269,7 @@ Modconfig: {
 	}
 
 	EnableEasyAddToBL: {
-		Label: Allow adding to Blacklist by right-clicking icons
+		Label: "[i:2701] Allow adding to Blacklist by right-clicking icons"
 		Tooltip:
 			'''
 			Lets you right-click debuff icons in-game to add them to list below
@@ -291,6 +291,7 @@ NBuffList: {
 	DisplayName: Debuff List
 	Headers.List:
 		'''
+		[c/FFFF00:You don't need to touch this unless you know what you are doing.]
 		Copy & paste desired debuffs below over to blacklist.
 		Must be in-world to view, use restore defaults to refresh list.
 		For more info, find the debuff blacklist guide on this mod's Workshop page.

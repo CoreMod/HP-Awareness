@@ -1,2 +1,3 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
 
+Clarified list being obsolete in config

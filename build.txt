@@ -1,8 +1,8 @@
 displayName = HP Awareness
 author = Core
-version = 1.0.4.0
+version = 1.0.4.1
 side = Client
 hideCode = true
 hideResources = true
-buildIgnore = *.csproj, obj\*, bin\*, *.sln
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, *.md
 homepage = https://steamcommunity.com/sharedfiles/filedetails/?id=2564503881
