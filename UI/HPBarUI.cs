@@ -43,9 +43,9 @@ namespace HPAware.UI
 					G = 255f * HPPercent * 2f;
 					R = 255f;
 				}
-				R *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
-				G *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
-				A *= Main.LocalPlayer.GetModPlayer<Modplayer>().BarAlpha;
+				R *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
+				G *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
+				A *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
 				R = MathHelper.Clamp(R, 0f, 255f);
 				G = MathHelper.Clamp(G, 0f, 255f);
 				A = MathHelper.Clamp(A, 0f, 255f);

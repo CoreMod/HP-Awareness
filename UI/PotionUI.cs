@@ -28,7 +28,7 @@ namespace HPAware.UI
                 Vector2 Position = new(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
                 Vector2 Offset = new(10, 40);
                 Color Opacity = new(M.PotionOpacity, M.PotionOpacity, M.PotionOpacity, M.PotionOpacity);
-                if (Main.LocalPlayer.GetModPlayer<Modplayer>().DebuffTimer > 0)     //Checks that debuff UI is active, checking UI with isVisible doesn't work, sad
+                if (Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().DebuffTimer > 0)     //Checks that debuff UI is active, checking UI with isVisible doesn't work, sad
                 {
                     if (M.BuffLayout == "Vertical")
                     {

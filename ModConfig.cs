@@ -149,6 +149,8 @@ namespace HPAware
         [DefaultValue(1f)]
         public float BuffScale;
 
+        public bool EnableEasyAddToBL;
+
         public List<string> DebuffBL = new()
         { "Campfire", "PeaceCandle", "HeartLamp", "CatBast",
             "StarInBottle", "PotionSickness", "ManaSickness",
@@ -158,7 +160,7 @@ namespace HPAware
         {
             if (!Main.gameMenu)     //Called whenever config updates mid-game
             {
-                GetInstance<BuffFlags>().UpdateBlacklistedDebuffs();
+                GetInstance<BuffSystems>().UpdateBlacklistedDebuffs();
             }
         }
     }

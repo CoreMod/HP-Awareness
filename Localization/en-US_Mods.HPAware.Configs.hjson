@@ -22,6 +22,7 @@ Modconfig: {
 			'''
 	}
 
+	# Hurt Overlay ----------------------------------------------
 	DisableHurtOverlay: {
 		Label: Disable Overlay for Getting Hit
 		Tooltip:
@@ -70,6 +71,7 @@ Modconfig: {
 			'''
 	}
 
+	# Low HP Overlay ----------------------------------------------
 	DisableLowHpOverlay: {
 		Label: Disable overlay for low health
 		Tooltip:
@@ -139,8 +141,9 @@ Modconfig: {
 		Tooltip: Having HP lower or equal to this percentage activates overlay & sound
 	}
 
+	# HP Bar ----------------------------------------------
 	DisableHPBar: {
-		Label: Disable player HP bar
+		Label: Disable player HP Bar
 		Tooltip:
 			'''
 			When damaged, this appears below you much like every other HP bar
@@ -168,6 +171,7 @@ Modconfig: {
 		Tooltip: Determines bar size
 	}
 
+	# Potion Pop Up ----------------------------------------------
 	DisablePSAudio: {
 		Label: Disable Potion Sickness Audio
 		Tooltip:
@@ -210,6 +214,7 @@ Modconfig: {
 		Tooltip: Determines icon size
 	}
 
+	# Debuff Pop Up ----------------------------------------------
 	DisableBuffVisual: {
 		Label: Disable Debuff Pop Ups
 		Tooltip:
@@ -263,12 +268,21 @@ Modconfig: {
 		Tooltip: Determines icon size(s)
 	}
 
+	EnableEasyAddToBL: {
+		Label: Allow adding to Blacklist by right-clicking icons
+		Tooltip:
+			'''
+			Lets you right-click debuff icons in-game to add them to list below
+			Once enabled, debuffs indicated by [i:2701] are not in the list
+			'''
+	}
+
 	DebuffBL: {
 		Label: Debuff Blacklist
 		Tooltip:
 			'''
-			Any debuffs in this list will NOT have a pop up (See next page for options)
-			Reload mods for best effects
+			Any debuffs in this list will NOT have a pop up
+			Use with feature above
 			'''
 	}
 }
@@ -290,8 +304,8 @@ NBuffList: {
 
 DebuffList: {
 	Debuffs: {
+		Label: ""
 		Tooltip: ""
-		Label: Debuffs
 	}
 
 	Tooltip: ""

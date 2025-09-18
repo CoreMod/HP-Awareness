@@ -1,4 +1,2 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
-[list]
-[*]Updated asset code for new tmod changes
-[/list]
+

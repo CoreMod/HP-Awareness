@@ -16,7 +16,7 @@ namespace HPAware.UI
         {
             if (!Main.dedServ && Main.myPlayer == Main.LocalPlayer.whoAmI)
             {
-                Modplayer P = Main.LocalPlayer.GetModPlayer<Modplayer>();
+                HPSystemPlayer P = Main.LocalPlayer.GetModPlayer<HPSystemPlayer>();
                 Vector2 Position = new(Main.LocalPlayer.Center.X, Main.LocalPlayer.position.Y);
                 Vector2 Offset = new(15, 40);
                 Color Opacity = new(M.BuffOpacity, M.BuffOpacity, M.BuffOpacity, M.BuffOpacity);
