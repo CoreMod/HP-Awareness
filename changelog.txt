@@ -1,3 +1,4 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
 
-Clarified list being obsolete in config
+- Added gray vision as an extra feature
+- Tweaked some config wording

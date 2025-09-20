@@ -11,6 +11,7 @@ Modconfig: {
 			[i:2701] Debuff Pop Up
 			(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, check their config)
 			'''
+		Gray: "[i:1099] Gray Vision"
 	}
 
 	DisableMLShader: {
@@ -109,11 +110,11 @@ Modconfig: {
 	}
 
 	DisableLowHpAudio: {
-		Label: Disable Audio
+		Label: "[i:5117] Disable Audio"
 		Tooltip:
 			'''
 			When active, a sound plays repeatedly
-			Check the box to disable
+			Check the box to disable (Disabled by default)
 			'''
 	}
 
@@ -127,7 +128,7 @@ Modconfig: {
 	}
 
 	LowHpSdFreq: {
-		Label: Sound frequency
+		Label: "[i:5117] Sound frequency"
 		Tooltip:
 			'''
 			Determines how often the sound plays (in ticks)
@@ -139,6 +140,32 @@ Modconfig: {
 	Overlaytrigger: {
 		Label: Low HP Percentage
 		Tooltip: Having HP lower or equal to this percentage activates overlay & sound
+	}
+
+	# Gray Vision ----------------------------------------------
+	DisableGrayVision: {
+		Label: Disable Gray Vision
+		Tooltip:
+			'''
+			When active, screen turns gray the lower your health
+			Also applies to above overlays
+			Requires Color/White lighting
+			Check the box to disable (Disabled by default)
+			'''
+	}
+
+	GrayTrigger: {
+		Label: Start Percentage
+		Tooltip: Having HP lower or equal to this percentage starts vision
+	}
+
+	GrayMaxIntensity: {
+		Label: Max Intensity
+		Tooltip:
+			'''
+			Determines maximum vision intensity at 0-1% HP
+			Higher = More intense
+			'''
 	}
 
 	# HP Bar ----------------------------------------------
@@ -167,7 +194,7 @@ Modconfig: {
 	}
 
 	HPBarScale: {
-		Label: Icon Scale
+		Label: Bar Scale
 		Tooltip: Determines bar size
 	}
 
@@ -239,7 +266,7 @@ Modconfig: {
 		Tooltip:
 			'''
 			Debuff icons will have their duration placed on top of them
-			Check the box to disable
+			Check the box to disable (Disabled by default)
 			'''
 	}
 

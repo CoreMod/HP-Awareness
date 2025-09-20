@@ -47,6 +47,7 @@ namespace HPAware
                 {
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
+                
                 if (!M.DisableHPBar)
                 {
                     BarTimer = M.HPBarDelay;
@@ -140,37 +141,66 @@ namespace HPAware
                     }
                 }
 
-                //Show Low HP shader
-                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
+                //Low HP effects
+                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger)
                 {
-                    string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
-                    Filters.Scene.Activate(LowOverlay);
-                    Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash);
+                    //Show Low HP shader
+                    if (!M.DisableLowHpOverlay)
+                    {
+                        string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
+                        Filters.Scene.Activate(LowOverlay);
+                        Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash);
+                    }
+                    //SFX
+                    if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
+                    {
+                        SoundStyle SoundToUse = Bell;       //Default
+                        switch (M.LowHpSound)
+                        {
+                            case "Heartbeat":
+                                SoundToUse = Heartbeat;
+                                break;
+                            case "Mana Chirp":
+                                SoundToUse = ManaChirp;
+                                break;
+                            case "Click":
+                                SoundToUse = Click;
+                                break;
+                            case "Bell (No Pitch)":
+                                SoundToUse = BellNoPitch;
+                                break;
+                        }
+                        SoundEngine.PlaySound(SoundToUse);
+                    }
                 }
                 else
                 {
                     Filters.Scene["HPOverlay2"].Deactivate();
                     Filters.Scene["NewHPOverlay2"].Deactivate();
                 }
-                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
+
+                //Gray Vision
+                Filter F = Filters.Scene["HPOverlayFlatGrayScale"];
+                if (!M.DisableGrayVision && Player.statLife <= Player.statLifeMax2 * M.GrayTrigger)
                 {
-                    SoundStyle SoundToUse = Bell;       //Default
-                    switch (M.LowHpSound)
+                    float HPPercent = (float)Player.statLife / ((float)Player.statLifeMax2 * M.GrayTrigger);
+                    if (!F.IsActive())
                     {
-                        case "Heartbeat":
-                            SoundToUse = Heartbeat;
-                            break;
-                        case "Mana Chirp":
-                            SoundToUse = ManaChirp;
-                            break;
-                        case "Click":
-                            SoundToUse = Click;
-                            break;
-                        case "Bell (No Pitch)":
-                            SoundToUse = BellNoPitch;
-                            break;
+                        Filters.Scene.Activate("HPOverlayFlatGrayScale");
                     }
-                    SoundEngine.PlaySound(SoundToUse);
+                    else
+                    {
+                        float Intensity = Math.Clamp((1f - HPPercent) * M.GrayMaxIntensity, 0f, M.GrayMaxIntensity);
+                        F.GetShader().UseIntensity(Intensity);  //0f = Full gray
+                    }
+                }
+                else
+                {
+                    if (F.IsActive())   //Doesn't deactivate immediately, set to no gray until it happens
+                    {
+                        F.GetShader().UseIntensity(0f);
+                    }
+                    F.Deactivate();
                 }
 
                 //Manage HP bar

@@ -72,8 +72,22 @@ namespace HPAware
         public int LowHpSdFreq;
 
         [SliderColor(0, 0, 255)]
-        [DefaultValue(0.25)]
+        [DefaultValue(0.25f)]
         public float Overlaytrigger;
+
+        [Header("Gray")]   //--------------------------------
+
+        [DefaultValue(true)]
+        public bool DisableGrayVision;
+
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(0.25f)]
+        public float GrayTrigger;
+
+        [Increment(0.1f)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(1f)]
+        public float GrayMaxIntensity;
 
         [Header("Bar")]   //--------------------------------
 

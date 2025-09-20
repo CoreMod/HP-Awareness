@@ -7,6 +7,7 @@ using Terraria.UI;
 using HPAware.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using ReLogic.Content;
 
 namespace HPAware
 {
@@ -27,11 +28,15 @@ namespace HPAware
 
         public override void Load()
         {
-            Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(Mod.Assets.Request<Effect>("Effects/HPOverlay"), "HPOverlay"), EffectPriority.VeryHigh);
-            Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(Mod.Assets.Request<Effect>("Effects/HPOverlay"), "HPOverlay2"), EffectPriority.VeryHigh);
-            Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(Mod.Assets.Request<Effect>("Effects/NewHPOverlay"), "NewHPOverlay"), EffectPriority.VeryHigh);
-            Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(Mod.Assets.Request<Effect>("Effects/NewHPOverlay"), "NewHPOverlay2"), EffectPriority.VeryHigh);
-            Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(Mod.Assets.Request<Effect>("Effects/HPOverlayFlat"), "HPOverlayFlat"), EffectPriority.VeryHigh);
+            Asset<Effect> FilterAssets = Mod.Assets.Request<Effect>("Effects/HPOverlays");
+
+            Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlay"), EffectPriority.VeryHigh);
+            Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayLow"), EffectPriority.VeryHigh);
+            Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "NewHPOverlay"), EffectPriority.VeryHigh);
+            Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(FilterAssets, "NewHPOverlayLow"), EffectPriority.VeryHigh);
+            Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayFlat"), EffectPriority.VeryHigh);
+            Filters.Scene["HPOverlayFlatGrayScale"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayFlatGrayScale"), EffectPriority.VeryHigh);
+
             if (!Main.dedServ)
             {
                 DebuffInterface = new UserInterface();
@@ -40,7 +45,6 @@ namespace HPAware
                 PotionState = new PotionUI();
                 HPBarInterface = new UserInterface();
                 HPBarState = new HPBarUI();
-                PotionState.Activate();
             }
         }
 
@@ -50,6 +54,7 @@ namespace HPAware
             HidePotion();
             HideHPBar();    //HP bar persists on rejoin, this fixes it
         }
+
         //Used for UI activation and deactivation
         internal void ShowDebuff()
         {
