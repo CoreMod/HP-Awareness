@@ -4,5 +4,5 @@ version = 1.0.5.0
 side = Client
 hideCode = true
 hideResources = true
-buildIgnore = *.csproj, obj\*, bin\*, *.sln, *.md
+buildIgnore = *.csproj, obj\*, bin\*, Properties\*, *.sln, *.md, *.user
 homepage = https://steamcommunity.com/sharedfiles/filedetails/?id=2564503881

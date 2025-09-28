@@ -26,7 +26,9 @@ float4 HPOverlay(float2 coords : TEXCOORD0) : COLOR0
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.97 || coords.x <= 0.03 || coords.y <= 0.08 || coords.y >= 0.92)
     {
-        color.r += uOpacity;
+        color.r += uColor.r * uOpacity;
+        color.g += uColor.g * uOpacity;
+        color.b += uColor.b * uOpacity;
     }
     return color;
 }
@@ -36,7 +38,9 @@ float4 HPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.985 || coords.x <= 0.015 || coords.y <= 0.03 || coords.y >= 0.97)
     {
-        color.r += (sin(uIntensity * uTime) + 1) * uOpacity;
+        color.r += (sin(uIntensity * uTime) + 1) * uColor.r * uOpacity;
+        color.g += (sin(uIntensity * uTime) + 1) * uColor.g * uOpacity;
+        color.b += (sin(uIntensity * uTime) + 1) * uColor.b * uOpacity;
     }
     return color;
 }
@@ -45,25 +49,34 @@ float4 HPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
 float4 NewHPOverlay(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    color.r += (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6)) * uOpacity;
+    float1 powerFormula = (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6));
+    color.r += powerFormula * uColor.r * uOpacity;
+    color.g += powerFormula * uColor.g * uOpacity;
+    color.b += powerFormula * uColor.b * uOpacity;
     return color;
 }
 
 float4 NewHPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    color.r += (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40)) * (sin(uIntensity * uTime) + 1) * uOpacity;
+    float1 powerFormula = (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40));
+    color.r += powerFormula * (sin(uIntensity * uTime) + 1) * uColor.r * uOpacity;
+    color.g += powerFormula * (sin(uIntensity * uTime) + 1) * uColor.g * uOpacity;
+    color.b += powerFormula * (sin(uIntensity * uTime) + 1) * uColor.b * uOpacity;
     return color;
 }
 
-//Flat Overlays
+//Flat Overlay
 float4 HPOverlayFlat(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    color.r += uOpacity;
+    color.r += uColor.r * uOpacity;
+    color.g += uColor.g * uOpacity;
+    color.b += uColor.b * uOpacity;
     return color;
 }
 
+//Grayscale
 float4 HPOverlayFlatGrayScale(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);

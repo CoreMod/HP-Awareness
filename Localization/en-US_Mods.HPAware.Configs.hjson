@@ -44,6 +44,11 @@ Modconfig: {
 			'''
 	}
 
+	HurtColor: {
+		Label: Overlay Color
+		Tooltip: ""
+	}
+
 	HurtAlpha: {
 		Label: Overlay intensity
 		Tooltip:
@@ -89,6 +94,11 @@ Modconfig: {
 			Instead of a gradient, it is a single color
 			Retro/trippy lighting default
 			'''
+	}
+
+	LowHpColor: {
+		Label: Overlay Color
+		Tooltip: ""
 	}
 
 	LowHpAlpha: {

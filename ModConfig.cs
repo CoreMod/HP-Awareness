@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +25,10 @@ namespace HPAware
         [DefaultValue("NewHPOverlay")]
         public string HurtOverlayType;
 
+        [SeparatePage]
+        [DefaultValue(typeof(Color), "255, 0, 0, 255")]
+        public Color HurtColor;
+
         [Range(0.1f, 2f)]
         [Increment(0.1f)]
         [SliderColor(0, 0, 255)]
@@ -43,6 +48,10 @@ namespace HPAware
         public bool DisableLowHpOverlay;
 
         public bool ClassicLowHpOverlay;
+
+        [SeparatePage]
+        [DefaultValue(typeof(Color), "255, 0, 0, 255")]
+        public Color LowHpColor;
 
         [Range(0.1f, 1f)]
         [Increment(0.1f)]

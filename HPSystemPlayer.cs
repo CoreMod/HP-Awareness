@@ -14,6 +14,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace HPAware
 {
+    public enum LowHPSound
+    {
+        Bell,
+        Heartbeat,
+        ManaChirp,
+        Click,
+        BellNoPitch
+    }
+
     public class HPSystemPlayer : ModPlayer
     {
         private readonly Modconfig M = GetInstance<Modconfig>();
@@ -26,7 +35,7 @@ namespace HPAware
         private int BarTimer;
         public float BarAlpha;
         public int DebuffToShow;
-        public List<int> DebuffsToShow = new(44);
+        public List<int> DebuffsToShow = new(Player.MaxBuffs);
 
         public override void OnEnterWorld()
         {
@@ -129,13 +138,14 @@ namespace HPAware
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
-                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha);
+                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha).UseColor(M.HurtColor);
+                    //Animate shader based on config fade speed
                     if (ShaderFade > 0f)
                     {
                         ShaderFade -= (float)Math.Round(M.HurtSpeed * 0.01, 2);     //Computers can't calculate decimals perfectly, so this rounds it to its intended value
                         ShaderFade = (float)Math.Round(ShaderFade, 2);
                     }
-                    if (ShaderAlpha <= 0 && M.HaveIntensity)
+                    if (ShaderAlpha <= 0f && M.HaveIntensity)
                     {
                         Filters.Scene[HurtOverlay].Deactivate();
                     }
@@ -149,7 +159,7 @@ namespace HPAware
                     {
                         string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
                         Filters.Scene.Activate(LowOverlay);
-                        Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash);
+                        Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash).UseColor(M.LowHpColor);
                     }
                     //SFX
                     if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
@@ -180,27 +190,27 @@ namespace HPAware
                 }
 
                 //Gray Vision
-                Filter F = Filters.Scene["HPOverlayFlatGrayScale"];
+                Filter Gray = Filters.Scene["HPOverlayFlatGrayScale"];
                 if (!M.DisableGrayVision && Player.statLife <= Player.statLifeMax2 * M.GrayTrigger)
                 {
                     float HPPercent = (float)Player.statLife / ((float)Player.statLifeMax2 * M.GrayTrigger);
-                    if (!F.IsActive())
+                    if (!Gray.IsActive())
                     {
                         Filters.Scene.Activate("HPOverlayFlatGrayScale");
                     }
                     else
                     {
                         float Intensity = Math.Clamp((1f - HPPercent) * M.GrayMaxIntensity, 0f, M.GrayMaxIntensity);
-                        F.GetShader().UseIntensity(Intensity);  //0f = Full gray
+                        Gray.GetShader().UseIntensity(Intensity);  //0f = Full gray
                     }
                 }
                 else
                 {
-                    if (F.IsActive())   //Doesn't deactivate immediately, set to no gray until it happens
+                    if (Gray.IsActive())   //Doesn't deactivate immediately, set to no gray until it happens
                     {
-                        F.GetShader().UseIntensity(0f);
+                        Gray.GetShader().UseIntensity(0f);
                     }
-                    F.Deactivate();
+                    Gray.Deactivate();
                 }
 
                 //Manage HP bar
@@ -348,7 +358,7 @@ namespace HPAware
         /// </summary>
         public bool[] DoNotShow = new bool[BuffLoader.BuffCount];
 
-        public static LocalizedText AddToBLText;
+        private static LocalizedText AddToBLText;
 
         public override void SetStaticDefaults()
         {
