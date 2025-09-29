@@ -46,7 +46,7 @@ Modconfig: {
 
 	HurtColor: {
 		Label: Overlay Color
-		Tooltip: ""
+		Tooltip: Note: Alpha should be 0, other alpha values have no effect
 	}
 
 	HurtAlpha: {
@@ -98,7 +98,12 @@ Modconfig: {
 
 	LowHpColor: {
 		Label: Overlay Color
-		Tooltip: ""
+		Tooltip: Note: Alpha should be 0, other alpha values have no effect
+	}
+
+	Overlaytrigger: {
+		Label: Low HP Percentage
+		Tooltip: Having HP lower or equal to this percentage activates overlay & sound
 	}
 
 	LowHpAlpha: {
@@ -145,11 +150,6 @@ Modconfig: {
 			Lower = More often
 			60 ticks = 1 second
 			'''
-	}
-
-	Overlaytrigger: {
-		Label: Low HP Percentage
-		Tooltip: Having HP lower or equal to this percentage activates overlay & sound
 	}
 
 	# Gray Vision ----------------------------------------------

@@ -138,7 +138,9 @@ namespace HPAware
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
-                    Filters.Scene[HurtOverlay].GetShader().UseOpacity(ShaderAlpha).UseColor(M.HurtColor);
+                    Filters.Scene[HurtOverlay].GetShader()
+                        .UseOpacity(ShaderAlpha)
+                        .UseColor(M.HurtColor);
                     //Animate shader based on config fade speed
                     if (ShaderFade > 0f)
                     {
@@ -159,7 +161,10 @@ namespace HPAware
                     {
                         string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
                         Filters.Scene.Activate(LowOverlay);
-                        Filters.Scene[LowOverlay].GetShader().UseOpacity(M.LowHpAlpha).UseIntensity(M.LowHpFlash).UseColor(M.LowHpColor);
+                        Filters.Scene[LowOverlay].GetShader()
+                            .UseOpacity(M.LowHpAlpha)
+                            .UseIntensity(M.LowHpFlash)
+                            .UseColor(M.LowHpColor);
                     }
                     //SFX
                     if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)

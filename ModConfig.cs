@@ -25,8 +25,7 @@ namespace HPAware
         [DefaultValue("NewHPOverlay")]
         public string HurtOverlayType;
 
-        [SeparatePage]
-        [DefaultValue(typeof(Color), "255, 0, 0, 255")]
+        [DefaultValue(typeof(Color), "255, 0, 0, 0")]
         public Color HurtColor;
 
         [Range(0.1f, 2f)]
@@ -49,9 +48,12 @@ namespace HPAware
 
         public bool ClassicLowHpOverlay;
 
-        [SeparatePage]
-        [DefaultValue(typeof(Color), "255, 0, 0, 255")]
+        [DefaultValue(typeof(Color), "255, 0, 0, 0")]
         public Color LowHpColor;
+
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(0.25f)]
+        public float Overlaytrigger;
 
         [Range(0.1f, 1f)]
         [Increment(0.1f)]
@@ -79,10 +81,6 @@ namespace HPAware
         [SliderColor(0, 0, 255)]
         [DefaultValue(35)]
         public int LowHpSdFreq;
-
-        [SliderColor(0, 0, 255)]
-        [DefaultValue(0.25f)]
-        public float Overlaytrigger;
 
         [Header("Gray")]   //--------------------------------
 
@@ -213,5 +211,14 @@ namespace HPAware
                 }
             }
         }
+    }
+
+    [SeparatePage]
+    public class ColorSubpage
+    {
+        [DefaultValue(typeof(Color), "255, 0, 0, 0")]
+        public Color OverlayColor;
+
+        public bool UseDarkColors;
     }
 }
