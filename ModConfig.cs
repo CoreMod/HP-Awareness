@@ -61,7 +61,7 @@ namespace HPAware
         [DefaultValue(1f)]
         public float LowHpAlpha;
 
-        [Range(1f, 15f)]
+        [Range(0f, 15f)]
         [Increment(1f)]
         [SliderColor(0, 0, 255)]
         [DefaultValue(4f)]

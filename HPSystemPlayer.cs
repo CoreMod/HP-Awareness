@@ -138,9 +138,15 @@ namespace HPAware
                 if (Filters.Scene[HurtOverlay].IsActive())
                 {
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
+                    Color Col = M.HurtColor;
+                    if (false)
+                    {
+                        Col = new((M.HurtColor.G + M.HurtColor.B) / 2, (M.HurtColor.R + M.HurtColor.B) / 2, (M.HurtColor.R + M.HurtColor.G) / 2);
+                    }
                     Filters.Scene[HurtOverlay].GetShader()
                         .UseOpacity(ShaderAlpha)
-                        .UseColor(M.HurtColor);
+                        .UseColor(Col)
+                        .UseIntensity((true) ? 1f : -1f);
                     //Animate shader based on config fade speed
                     if (ShaderFade > 0f)
                     {
@@ -159,7 +165,7 @@ namespace HPAware
                     //Show Low HP shader
                     if (!M.DisableLowHpOverlay)
                     {
-                        string LowOverlay = (!M.ClassicLowHpOverlay) ? "NewHPOverlay2" : "HPOverlay2";
+                        string LowOverlay = (!M.ClassicLowHpOverlay) ? "LowHPNew" : "LowHPBasic";
                         Filters.Scene.Activate(LowOverlay);
                         Filters.Scene[LowOverlay].GetShader()
                             .UseOpacity(M.LowHpAlpha)
@@ -190,18 +196,18 @@ namespace HPAware
                 }
                 else
                 {
-                    Filters.Scene["HPOverlay2"].Deactivate();
-                    Filters.Scene["NewHPOverlay2"].Deactivate();
+                    Filters.Scene["LowHPBasic"].Deactivate();
+                    Filters.Scene["LowHPNew"].Deactivate();
                 }
 
                 //Gray Vision
-                Filter Gray = Filters.Scene["HPOverlayFlatGrayScale"];
+                Filter Gray = Filters.Scene["FlatGrayScale"];
                 if (!M.DisableGrayVision && Player.statLife <= Player.statLifeMax2 * M.GrayTrigger)
                 {
                     float HPPercent = (float)Player.statLife / ((float)Player.statLifeMax2 * M.GrayTrigger);
                     if (!Gray.IsActive())
                     {
-                        Filters.Scene.Activate("HPOverlayFlatGrayScale");
+                        Filters.Scene.Activate("FlatGrayScale");
                     }
                     else
                     {
@@ -245,13 +251,13 @@ namespace HPAware
                         Filters.Scene[Overlay].Deactivate();
                     }
                 }
-                if (!M.ClassicLowHpOverlay && Filters.Scene["HPOverlay2"].IsActive())
+                if (!M.ClassicLowHpOverlay && Filters.Scene["LowHPBasic"].IsActive())
                 {
-                    Filters.Scene["HPOverlay2"].Deactivate();
+                    Filters.Scene["LowHPBasic"].Deactivate();
                 }
-                else if (M.ClassicLowHpOverlay && Filters.Scene["NewHPOverlay2"].IsActive())
+                else if (M.ClassicLowHpOverlay && Filters.Scene["LowHPNew"].IsActive())
                 {
-                    Filters.Scene["NewHPOverlay2"].Deactivate();
+                    Filters.Scene["LowHPNew"].Deactivate();
                 }
             }
         }
@@ -289,8 +295,9 @@ namespace HPAware
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
                 ShaderFade = 0f;
-                Filters.Scene["HPOverlay2"].Deactivate();
-                Filters.Scene["NewHPOverlay2"].Deactivate();
+                Filters.Scene["LowHPBasic"].Deactivate();
+                Filters.Scene["LowHPNew"].Deactivate();
+                Filters.Scene["FlatGrayScale"].Deactivate();
                 foreach (string Overlay in HurtTypes)
                 {
                     if (Filters.Scene[Overlay].IsActive())

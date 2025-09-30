@@ -21,7 +21,7 @@ float4 uSourceRect;
 float2 uZoom;
 
 //Basic Overlays
-float4 HPOverlay(float2 coords : TEXCOORD0) : COLOR0
+float4 HurtBasic(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.97 || coords.x <= 0.03 || coords.y <= 0.08 || coords.y >= 0.92)
@@ -33,7 +33,7 @@ float4 HPOverlay(float2 coords : TEXCOORD0) : COLOR0
     return color;
 }
 
-float4 HPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
+float4 LowHPBasic(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.985 || coords.x <= 0.015 || coords.y <= 0.03 || coords.y >= 0.97)
@@ -46,18 +46,29 @@ float4 HPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
 }
 
 //New Overlays
-float4 NewHPOverlay(float2 coords : TEXCOORD0) : COLOR0
+float4 HurtNew(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    float1 powerFormula = (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6));
-    color.r += clamp(powerFormula * uColor.r * uOpacity, 0, uColor.r);
-    color.g += clamp(powerFormula * uColor.g * uOpacity, 0, uColor.g);
-    color.b += clamp(powerFormula * uColor.b * uOpacity, 0, uColor.b);
+    float1 powerFormula = (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6));    //(2x^6 - 1) + (2y^6 - 1)
+    color.r += clamp(powerFormula * uColor.r * uOpacity, 0, uColor.r) * uIntensity;
+    color.g += clamp(powerFormula * uColor.g * uOpacity, 0, uColor.g) * uIntensity;
+    color.b += clamp(powerFormula * uColor.b * uOpacity, 0, uColor.b) * uIntensity;
     //color.a has no effect
     return color;
 }
 
-float4 NewHPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
+float4 HurtNewDark(float2 coords : TEXCOORD0) : COLOR0
+{
+    float4 color = tex2D(uImage0, coords);
+    float1 powerFormula = (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6));
+    color.r -= clamp(powerFormula * uColor.r * uOpacity, 0, uColor.r);
+    color.g -= clamp(powerFormula * uColor.g * uOpacity, 0, uColor.g);
+    color.b -= clamp(powerFormula * uColor.b * uOpacity, 0, uColor.b);
+    //color.a has no effect
+    return color;
+}
+
+float4 LowHPNew(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     float1 powerFormula = (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40));
@@ -68,7 +79,7 @@ float4 NewHPOverlayLow(float2 coords : TEXCOORD0) : COLOR0
 }
 
 //Flat Overlay
-float4 HPOverlayFlat(float2 coords : TEXCOORD0) : COLOR0
+float4 HurtFlat(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     color.r += clamp(uColor.r * uOpacity, 0, uColor.r);
@@ -78,7 +89,7 @@ float4 HPOverlayFlat(float2 coords : TEXCOORD0) : COLOR0
 }
 
 //Grayscale
-float4 HPOverlayFlatGrayScale(float2 coords : TEXCOORD0) : COLOR0
+float4 FlatGrayScale(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     //Calculate grayscale color (not the only way but this does the job)
@@ -93,32 +104,36 @@ float4 HPOverlayFlatGrayScale(float2 coords : TEXCOORD0) : COLOR0
 technique Technique1
 {
     //Basic Overlays
-    pass HPOverlay
+    pass HurtBasic
     {
-        PixelShader = compile ps_2_0 HPOverlay();
+        PixelShader = compile ps_2_0 HurtBasic();
     }
-    pass HPOverlayLow
+    pass LowHPBasic
     {
-        PixelShader = compile ps_2_0 HPOverlayLow();
+        PixelShader = compile ps_2_0 LowHPBasic();
     }
 
     //New Overlays
-    pass NewHPOverlay
+    pass HurtNew
     {
-        PixelShader = compile ps_2_0 NewHPOverlay();
+        PixelShader = compile ps_2_0 HurtNew();
     }
-    pass NewHPOverlayLow
+    pass HurtNewDark
     {
-        PixelShader = compile ps_2_0 NewHPOverlayLow();
+        PixelShader = compile ps_2_0 HurtNewDark();
+    }
+    pass LowHPNew
+    {
+        PixelShader = compile ps_2_0 LowHPNew();
     }
 
     //Flat Overlays
-    pass HPOverlayFlat
+    pass HurtFlat
     {
-        PixelShader = compile ps_2_0 HPOverlayFlat();
+        PixelShader = compile ps_2_0 HurtFlat();
     }
-    pass HPOverlayFlatGrayScale
+    pass FlatGrayScale
     {
-        PixelShader = compile ps_2_0 HPOverlayFlatGrayScale();
+        PixelShader = compile ps_2_0 FlatGrayScale();
     }
 }

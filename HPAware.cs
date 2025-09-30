@@ -30,12 +30,14 @@ namespace HPAware
         {
             Asset<Effect> FilterAssets = Mod.Assets.Request<Effect>("Effects/HPOverlays");
 
-            Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlay"), EffectPriority.VeryHigh);
-            Filters.Scene["HPOverlay2"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayLow"), EffectPriority.VeryHigh);
-            Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "NewHPOverlay"), EffectPriority.VeryHigh);
-            Filters.Scene["NewHPOverlay2"] = new Filter(new ScreenShaderData(FilterAssets, "NewHPOverlayLow"), EffectPriority.VeryHigh);
-            Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayFlat"), EffectPriority.VeryHigh);
-            Filters.Scene["HPOverlayFlatGrayScale"] = new Filter(new ScreenShaderData(FilterAssets, "HPOverlayFlatGrayScale"), EffectPriority.VeryHigh);
+            Filters.Scene["HPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "HurtBasic"), EffectPriority.VeryHigh);
+            Filters.Scene["LowHPBasic"] = new Filter(new ScreenShaderData(FilterAssets, "LowHPBasic"), EffectPriority.VeryHigh);
+
+            Filters.Scene["NewHPOverlay"] = new Filter(new ScreenShaderData(FilterAssets, "HurtNew"), EffectPriority.VeryHigh);
+            Filters.Scene["LowHPNew"] = new Filter(new ScreenShaderData(FilterAssets, "LowHPNew"), EffectPriority.VeryHigh);
+            
+            Filters.Scene["HPOverlayFlat"] = new Filter(new ScreenShaderData(FilterAssets, "HurtFlat"), EffectPriority.VeryHigh);
+            Filters.Scene["FlatGrayScale"] = new Filter(new ScreenShaderData(FilterAssets, "FlatGrayScale"), EffectPriority.VeryHigh);
 
             if (!Main.dedServ)
             {

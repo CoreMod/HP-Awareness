@@ -71,6 +71,7 @@ Modconfig: {
 		Label: Use variable intensity
 		Tooltip:
 			'''
+			Experimental
 			Hurt overlay's intensity fluctuates depending on how often you get hurt
 			Recommended with higher intensity values
 			Color/white lighting mode only
@@ -121,6 +122,7 @@ Modconfig: {
 			'''
 			Determines rate of flashing
 			Higher = More flashing
+			0 = No flashing
 			'''
 	}
 
