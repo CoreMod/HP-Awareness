@@ -26,9 +26,9 @@ float4 HurtBasic(float2 coords : TEXCOORD0) : COLOR0
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.97 || coords.x <= 0.03 || coords.y <= 0.08 || coords.y >= 0.92)
     {
-        color.r += clamp(uColor.r * uOpacity, 0, uColor.r);
-        color.g += clamp(uColor.g * uOpacity, 0, uColor.g);
-        color.b += clamp(uColor.b * uOpacity, 0, uColor.b);
+        color.r += clamp(uColor.r * uOpacity, 0, uColor.r) * uIntensity;
+        color.g += clamp(uColor.g * uOpacity, 0, uColor.g) * uIntensity;
+        color.b += clamp(uColor.b * uOpacity, 0, uColor.b) * uIntensity;
     }
     return color;
 }
@@ -38,9 +38,9 @@ float4 LowHPBasic(float2 coords : TEXCOORD0) : COLOR0
     float4 color = tex2D(uImage0, coords);
     if (coords.x >= 0.985 || coords.x <= 0.015 || coords.y <= 0.03 || coords.y >= 0.97)
     {
-        color.r += clamp((sin(uIntensity * uTime) + 1) * uColor.r * uOpacity, 0, uColor.r);
-        color.g += clamp((sin(uIntensity * uTime) + 1) * uColor.g * uOpacity, 0, uColor.g);
-        color.b += clamp((sin(uIntensity * uTime) + 1) * uColor.b * uOpacity, 0, uColor.b);
+        color.r += clamp((sin(uProgress * uTime) + 1) * uColor.r * uOpacity, 0, uColor.r) * uIntensity;
+        color.g += clamp((sin(uProgress * uTime) + 1) * uColor.g * uOpacity, 0, uColor.g) * uIntensity;
+        color.b += clamp((sin(uProgress * uTime) + 1) * uColor.b * uOpacity, 0, uColor.b) * uIntensity;
     }
     return color;
 }
@@ -57,24 +57,13 @@ float4 HurtNew(float2 coords : TEXCOORD0) : COLOR0
     return color;
 }
 
-float4 HurtNewDark(float2 coords : TEXCOORD0) : COLOR0
-{
-    float4 color = tex2D(uImage0, coords);
-    float1 powerFormula = (pow(2 * coords.x - 1, 6) + pow(2 * coords.y - 1, 6));
-    color.r -= clamp(powerFormula * uColor.r * uOpacity, 0, uColor.r);
-    color.g -= clamp(powerFormula * uColor.g * uOpacity, 0, uColor.g);
-    color.b -= clamp(powerFormula * uColor.b * uOpacity, 0, uColor.b);
-    //color.a has no effect
-    return color;
-}
-
 float4 LowHPNew(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     float1 powerFormula = (pow(2 * coords.x - 1, 40) + pow(2 * coords.y - 1, 40));
-    color.r += clamp(powerFormula * (sin(uIntensity * uTime) + 1) * uColor.r * uOpacity, 0, uColor.r);
-    color.g += clamp(powerFormula * (sin(uIntensity * uTime) + 1) * uColor.g * uOpacity, 0, uColor.g);
-    color.b += clamp(powerFormula * (sin(uIntensity * uTime) + 1) * uColor.b * uOpacity, 0, uColor.b);
+    color.r += clamp(powerFormula * (sin(uProgress * uTime) + 1) * uColor.r * uOpacity, 0, uColor.r) * uIntensity;
+    color.g += clamp(powerFormula * (sin(uProgress * uTime) + 1) * uColor.g * uOpacity, 0, uColor.g) * uIntensity;
+    color.b += clamp(powerFormula * (sin(uProgress * uTime) + 1) * uColor.b * uOpacity, 0, uColor.b) * uIntensity;
     return color;
 }
 
@@ -82,9 +71,9 @@ float4 LowHPNew(float2 coords : TEXCOORD0) : COLOR0
 float4 HurtFlat(float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    color.r += clamp(uColor.r * uOpacity, 0, uColor.r);
-    color.g += clamp(uColor.g * uOpacity, 0, uColor.g);
-    color.b += clamp(uColor.b * uOpacity, 0, uColor.b);
+    color.r += clamp(uColor.r * uOpacity, 0, uColor.r) * uIntensity;
+    color.g += clamp(uColor.g * uOpacity, 0, uColor.g) * uIntensity;
+    color.b += clamp(uColor.b * uOpacity, 0, uColor.b) * uIntensity;
     return color;
 }
 
@@ -117,10 +106,6 @@ technique Technique1
     pass HurtNew
     {
         PixelShader = compile ps_2_0 HurtNew();
-    }
-    pass HurtNewDark
-    {
-        PixelShader = compile ps_2_0 HurtNewDark();
     }
     pass LowHPNew
     {

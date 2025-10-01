@@ -45,8 +45,22 @@ Modconfig: {
 	}
 
 	HurtColor: {
-		Label: Overlay Color
-		Tooltip: Note: Alpha should be 0, other alpha values have no effect
+		Label: "[i:1073] Overlay Color"
+		Tooltip:
+			'''
+			Note: Alpha values have no effect unless using retro/trippy lighting
+			'''
+	}
+
+	HurtUseDarkColors: {
+		Label: "[i:1085] Use Darker Colors"
+		Tooltip:
+			'''
+			Experimental
+			Unsupported on retro/trippy lighting
+			Set alpha to 255 for most accurate view (still has no effect on shader)
+			White = Transparent
+			'''
 	}
 
 	HurtAlpha: {
@@ -98,8 +112,13 @@ Modconfig: {
 	}
 
 	LowHpColor: {
-		Label: Overlay Color
-		Tooltip: Note: Alpha should be 0, other alpha values have no effect
+		Label: "{$HurtColor.Label}"
+		Tooltip: "{$HurtColor.Tooltip}"
+	}
+
+	LowHpUseDarkColors: {
+		Label: "{$HurtUseDarkColors.Label}"
+		Tooltip: "{$HurtUseDarkColors.Tooltip}"
 	}
 
 	Overlaytrigger: {
@@ -155,14 +174,14 @@ Modconfig: {
 	}
 
 	# Gray Vision ----------------------------------------------
-	DisableGrayVision: {
-		Label: Disable Gray Vision
+	EnableGrayVision: {
+		Label: Gray Vision
 		Tooltip:
 			'''
 			When active, screen turns gray the lower your health
 			Also applies to above overlays
 			Requires Color/White lighting
-			Check the box to disable (Disabled by default)
+			Disabled by default
 			'''
 	}
 

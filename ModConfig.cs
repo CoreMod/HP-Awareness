@@ -1,6 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HPAware.UI;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +32,8 @@ namespace HPAware
         [DefaultValue(typeof(Color), "255, 0, 0, 0")]
         public Color HurtColor;
 
+        public bool HurtUseDarkColors;
+
         [Range(0.1f, 2f)]
         [Increment(0.1f)]
         [SliderColor(0, 0, 255)]
@@ -50,6 +56,8 @@ namespace HPAware
 
         [DefaultValue(typeof(Color), "255, 0, 0, 0")]
         public Color LowHpColor;
+
+        public bool LowHpUseDarkColors;
 
         [SliderColor(0, 0, 255)]
         [DefaultValue(0.25f)]
@@ -84,8 +92,7 @@ namespace HPAware
 
         [Header("Gray")]   //--------------------------------
 
-        [DefaultValue(true)]
-        public bool DisableGrayVision;
+        public bool EnableGrayVision;
 
         [SliderColor(0, 0, 255)]
         [DefaultValue(0.25f)]
@@ -184,6 +191,54 @@ namespace HPAware
                 GetInstance<BuffSystems>().UpdateBlacklistedDebuffs();
             }
         }
+
+        [JsonExtensionData]
+        private IDictionary<string, JToken> OldData = new Dictionary<string, JToken>();
+
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            //This method updates old var names to their new ones if they were changed
+            //Pre-1.0.5.0 var names
+            bool Bool;
+            JToken Token;
+            if (OldData.TryGetValue("DisableHurtOverlay", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableHurtOverlay = !Bool;
+            }
+            if (OldData.TryGetValue("DisableLowHpOverlay", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableLowHpOverlay = !Bool;
+            }
+            if (OldData.TryGetValue("DisableLowHpAudio", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableLowHpAudio = !Bool;
+            }
+            if (OldData.TryGetValue("DisableHPBar", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableHPBar = !Bool;
+            }
+            if (OldData.TryGetValue("DisablePSAudio", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnablePSAudio = !Bool;
+            }
+            if (OldData.TryGetValue("DisablePSVisual", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnablePSVisual = !Bool;
+            }
+            if (OldData.TryGetValue("DisableBuffVisual", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableBuffVisual = !Bool;
+            }
+            OldData.Clear();    //Required to prevent crashing
+        }
     }
 
     public class NBuffList : ModConfig
@@ -211,14 +266,5 @@ namespace HPAware
                 }
             }
         }
-    }
-
-    [SeparatePage]
-    public class ColorSubpage
-    {
-        [DefaultValue(typeof(Color), "255, 0, 0, 0")]
-        public Color OverlayColor;
-
-        public bool UseDarkColors;
     }
 }

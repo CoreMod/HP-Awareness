@@ -139,14 +139,16 @@ namespace HPAware
                 {
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
                     Color Col = M.HurtColor;
-                    if (false)
+                    float DarkDir = 1f;     //Remove color (dark) or add color (normal)
+                    if (M.HurtUseDarkColors)
                     {
-                        Col = new((M.HurtColor.G + M.HurtColor.B) / 2, (M.HurtColor.R + M.HurtColor.B) / 2, (M.HurtColor.R + M.HurtColor.G) / 2);
+                        Col = new(255 - M.HurtColor.R, 255 - M.HurtColor.G, 255 - M.HurtColor.B);
+                        DarkDir = -1f;
                     }
                     Filters.Scene[HurtOverlay].GetShader()
                         .UseOpacity(ShaderAlpha)
                         .UseColor(Col)
-                        .UseIntensity((true) ? 1f : -1f);
+                        .UseIntensity(DarkDir);     
                     //Animate shader based on config fade speed
                     if (ShaderFade > 0f)
                     {
@@ -167,10 +169,18 @@ namespace HPAware
                     {
                         string LowOverlay = (!M.ClassicLowHpOverlay) ? "LowHPNew" : "LowHPBasic";
                         Filters.Scene.Activate(LowOverlay);
+                        Color Col = M.LowHpColor;
+                        float DarkDir = 1f;
+                        if (M.LowHpUseDarkColors)
+                        {
+                            Col = new(255 - M.LowHpColor.R, 255 - M.LowHpColor.G, 255 - M.LowHpColor.B);
+                            DarkDir = -1f;
+                        }
                         Filters.Scene[LowOverlay].GetShader()
                             .UseOpacity(M.LowHpAlpha)
-                            .UseIntensity(M.LowHpFlash)
-                            .UseColor(M.LowHpColor);
+                            .UseProgress(M.LowHpFlash)
+                            .UseColor(Col)
+                            .UseIntensity(DarkDir);
                     }
                     //SFX
                     if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
@@ -202,7 +212,7 @@ namespace HPAware
 
                 //Gray Vision
                 Filter Gray = Filters.Scene["FlatGrayScale"];
-                if (!M.DisableGrayVision && Player.statLife <= Player.statLifeMax2 * M.GrayTrigger)
+                if (M.EnableGrayVision && Player.statLife <= Player.statLifeMax2 * M.GrayTrigger)
                 {
                     float HPPercent = (float)Player.statLife / ((float)Player.statLifeMax2 * M.GrayTrigger);
                     if (!Gray.IsActive())
@@ -270,7 +280,8 @@ namespace HPAware
                 {
                     string HurtOverlay = M.HurtOverlayType;
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
-                    Color Col = new(ShaderAlpha, 0f, 0f, 0f);
+                    Color Col = M.HurtColor;
+                    Col *= ShaderAlpha;
                     switch (HurtOverlay)
                     {
                         case "HPOverlayFlat":
@@ -283,7 +294,8 @@ namespace HPAware
                 }
                 if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
                 {
-                    Color Col = new((float)((Math.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha), 0f, 0f, 0f);
+                    Color Col = M.LowHpColor;
+                    Col *= (MathF.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha;
                     DrawBorders(0.03, 0.015, Col);
                 }
             }
