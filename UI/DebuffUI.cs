@@ -47,7 +47,7 @@ namespace HPAware.UI
                         }
                         RealPos = Position - Main.screenPosition - (Offset * M.BuffScale);      //Apply new offset
                         spriteBatch.Draw(TextureAssets.Buff[P.DebuffsToShow[i]].Value, RealPos, new Rectangle(0, 0, 32, 32), Opacity, 0f, Vector2.Zero, M.BuffScale, SpriteEffects.None, 1f);
-                        if (!M.DisableBuffTimer)
+                        if (M.EnableBuffTimer)
                         {
                             Vector2 Side = (M.BuffLayout == "Vertical") ? new Vector2(35f, 8f) * M.BuffScale : new Vector2(2f, -14f - (i % 2 * 15f)) * M.BuffScale;     //Text offset
                             CalculateAndDrawTime(spriteBatch, P.DebuffsToShow[i], RealPos + Side);
@@ -57,7 +57,7 @@ namespace HPAware.UI
                 else if (Main.LocalPlayer.HasBuff(P.DebuffToShow))
                 {
                     spriteBatch.Draw(TextureAssets.Buff[P.DebuffToShow].Value, RealPos, new Rectangle(0, 0, 32, 32), Opacity, 0f, Vector2.Zero, M.BuffScale, SpriteEffects.None, 1f);
-                    if (!M.DisableBuffTimer)
+                    if (M.EnableBuffTimer)
                     {
                         CalculateAndDrawTime(spriteBatch, P.DebuffToShow, RealPos + new Vector2(35f * M.BuffScale, 8f * M.BuffScale));
                     }
@@ -67,39 +67,19 @@ namespace HPAware.UI
 
         private void CalculateAndDrawTime(SpriteBatch spriteBatch, int Type, Vector2 Position)
         {
-            if (Main.buffNoTimeDisplay[Type])
-            {
-                return;
-            }
             int Index = Main.LocalPlayer.FindBuffIndex(Type);
             if (Index == -1)        //No longer has buff
             {
                 return;
             }
-            int DebuffTime = Main.LocalPlayer.buffTime[Index];
-            int DrawTime = DebuffTime;
-            string Unit = " s";
-            if (DebuffTime > 60)        //Seconds
+            string TimeText = "";
+            //This is the same code vanilla uses
+            if (Main.TryGetBuffTime(Index, out int buffTimeValue) && buffTimeValue > 2)
             {
-                DrawTime /= 60;
-            }
-            if (DebuffTime > 3600)      //Minutes
-            {
-                DrawTime /= 60;
-                DrawTime += 1;          //Rounding up
-                Unit = " m";
-            }
-            if (DebuffTime > 216000)    //Hours
-            {
-                DrawTime /= 60;
-                Unit = " h";
-            }
-            if (DebuffTime <= 60)
-            {
-                DrawTime = 0;
+                TimeText = Lang.LocalizedDuration(new System.TimeSpan(0, 0, buffTimeValue / 60), true, false);
             }
             Color Opacity = new(M.BuffOpacity, M.BuffOpacity, M.BuffOpacity, M.BuffOpacity);
-            DynamicSpriteFontExtensionMethods.DrawString(spriteBatch, FontAssets.MouseText.Value, DrawTime + Unit, Position, Opacity, 0f, Vector2.Zero, M.BuffScale - 0.2f, SpriteEffects.None, 1f);
+            DynamicSpriteFontExtensionMethods.DrawString(spriteBatch, FontAssets.MouseText.Value, TimeText, Position, Opacity, 0f, Vector2.Zero, M.BuffScale - 0.2f, SpriteEffects.None, 1f);
         }
     }
 }

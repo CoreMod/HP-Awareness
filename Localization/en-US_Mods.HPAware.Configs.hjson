@@ -24,13 +24,9 @@ Modconfig: {
 	}
 
 	# Hurt Overlay ----------------------------------------------
-	DisableHurtOverlay: {
-		Label: Disable Overlay for Getting Hit
-		Tooltip:
-			'''
-			When damaged, overlay makes the edges of the screen red before quickly disappearing
-			Check the box to disable
-			'''
+	EnableHurtOverlay: {
+		Label: Enable Hurt Overlay
+		Tooltip: When damaged, overlay makes the edges of the screen red before quickly disappearing
 	}
 
 	HurtOverlayType: {
@@ -46,10 +42,7 @@ Modconfig: {
 
 	HurtColor: {
 		Label: "[i:1073] Overlay Color"
-		Tooltip:
-			'''
-			Note: Alpha values have no effect unless using retro/trippy lighting
-			'''
+		Tooltip: Note: Alpha values have no effect unless using retro/trippy lighting
 	}
 
 	HurtUseDarkColors: {
@@ -93,13 +86,9 @@ Modconfig: {
 	}
 
 	# Low HP Overlay ----------------------------------------------
-	DisableLowHpOverlay: {
-		Label: Disable overlay for low health
-		Tooltip:
-			'''
-			When active, overlay makes the edges of the screen pulsate red
-			Check the box to disable
-			'''
+	EnableLowHpOverlay: {
+		Label: Enable Low HP Overlay
+		Tooltip: When active, overlay makes the edges of the screen pulsate red
 	}
 
 	ClassicLowHpOverlay: {
@@ -145,12 +134,12 @@ Modconfig: {
 			'''
 	}
 
-	DisableLowHpAudio: {
-		Label: "[i:5117] Disable Audio"
+	EnableLowHpAudio: {
+		Label: "[i:5117] Enable Audio"
 		Tooltip:
 			'''
 			When active, a sound plays repeatedly
-			Check the box to disable (Disabled by default)
+			Disabled by default
 			'''
 	}
 
@@ -175,7 +164,7 @@ Modconfig: {
 
 	# Gray Vision ----------------------------------------------
 	EnableGrayVision: {
-		Label: Gray Vision
+		Label: Enable Gray Vision
 		Tooltip:
 			'''
 			When active, screen turns gray the lower your health
@@ -200,13 +189,9 @@ Modconfig: {
 	}
 
 	# HP Bar ----------------------------------------------
-	DisableHPBar: {
-		Label: Disable player HP Bar
-		Tooltip:
-			'''
-			When damaged, this appears below you much like every other HP bar
-			Check the box to disable
-			'''
+	EnableHPBar: {
+		Label: Enable player HP Bar
+		Tooltip: When damaged, this appears below you much like every other HP bar
 	}
 
 	HPBarDelay: {
@@ -230,22 +215,14 @@ Modconfig: {
 	}
 
 	# Potion Pop Up ----------------------------------------------
-	DisablePSAudio: {
-		Label: Disable Potion Sickness Audio
-		Tooltip:
-			'''
-			Plays a higher-pitched potion-drink sound effect when potion sickness disappears
-			Check the box to disable
-			'''
+	EnablePSAudio: {
+		Label: Enable Potion Sickness Audio
+		Tooltip: Plays a higher-pitched potion-drink sound effect when potion sickness disappears
 	}
 
-	DisablePSVisual: {
-		Label: Disable Potion Sickness Visual
-		Tooltip:
-			'''
-			A potion icon will appear above the player when potion sickness disappears
-			Check the box to disable
-			'''
+	EnablePSVisual: {
+		Label: Enable Potion Sickness Visual
+		Tooltip: A potion icon will appear above the player when potion sickness disappears
 	}
 
 	PotionDelay: {
@@ -273,13 +250,9 @@ Modconfig: {
 	}
 
 	# Debuff Pop Up ----------------------------------------------
-	DisableBuffVisual: {
-		Label: Disable Debuff Pop Ups
-		Tooltip:
-			'''
-			When you get a debuff, the debuff's icon(s) will appear above the player for a second
-			Check the box to disable
-			'''
+	EnableBuffVisual: {
+		Label: Enable Debuff Pop Ups
+		Tooltip: When you get a debuff, the debuff's icon(s) will appear above the player for a second
 	}
 
 	BuffLayout: {
@@ -292,12 +265,12 @@ Modconfig: {
 			'''
 	}
 
-	DisableBuffTimer: {
-		Label: Disable Showing Debuff Duration
+	EnableBuffTimer: {
+		Label: Show Debuff Duration
 		Tooltip:
 			'''
 			Debuff icons will have their duration placed on top of them
-			Check the box to disable (Disabled by default)
+			Disabled by default
 			'''
 	}
 

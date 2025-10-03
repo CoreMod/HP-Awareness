@@ -47,7 +47,7 @@ namespace HPAware
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
                 string HurtOverlay = M.HurtOverlayType;
-                if (!M.DisableHurtOverlay)
+                if (M.EnableHurtOverlay)
                 {
                     Filters.Scene.Activate(HurtOverlay);
                     ShaderFade = 1f;
@@ -57,7 +57,7 @@ namespace HPAware
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
                 
-                if (!M.DisableHPBar)
+                if (M.EnableHPBar)
                 {
                     BarTimer = M.HPBarDelay;
                     BarAlpha = M.HPBarOpacity;
@@ -71,7 +71,7 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
-                if (!M.DisableBuffVisual)
+                if (M.EnableBuffVisual)
                 {
                     //Show debuff UI
                     for (int i = 0; i < Player.buffType.Length; i++)        //Checks if player has gotten a new debuff
@@ -107,11 +107,11 @@ namespace HPAware
                 //Show potion UI
                 if (Player.potionDelay == 1)
                 {
-                    if (!M.DisablePSAudio)
+                    if (M.EnablePSAudio)
                     {
                         SoundEngine.PlaySound(PotionRdySnd);
                     }
-                    if (!M.DisablePSVisual)
+                    if (M.EnablePSVisual)
                     {
                         GetInstance<HPAwareSystem>().ShowPotion();
                         PotionTimer = M.PotionDelay;
@@ -165,7 +165,7 @@ namespace HPAware
                 if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger)
                 {
                     //Show Low HP shader
-                    if (!M.DisableLowHpOverlay)
+                    if (M.EnableLowHpOverlay)
                     {
                         string LowOverlay = (!M.ClassicLowHpOverlay) ? "LowHPNew" : "LowHPBasic";
                         Filters.Scene.Activate(LowOverlay);
@@ -183,7 +183,7 @@ namespace HPAware
                             .UseIntensity(DarkDir);
                     }
                     //SFX
-                    if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && !M.DisableLowHpAudio)
+                    if (Main.GameUpdateCount % M.LowHpSdFreq == 0 && M.EnableLowHpAudio)
                     {
                         SoundStyle SoundToUse = Bell;       //Default
                         switch (M.LowHpSound)
@@ -276,7 +276,7 @@ namespace HPAware
         {
             if (!Main.dedServ && !Main.gameMenu && Main.myPlayer == Player.whoAmI && !Lighting.NotRetro && drawInfo.shadow == 0f && !Player.DeadOrGhost)
             {
-                if (ShaderFade > 0 && !M.DisableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate
+                if (ShaderFade > 0 && M.EnableHurtOverlay)     //Screen shaders do not appear on retro/trippy lighting modes, this attempts to compensate
                 {
                     string HurtOverlay = M.HurtOverlayType;
                     float ShaderAlpha = MathHelper.Lerp(0f, M.HurtAlpha, ShaderFade);
@@ -292,7 +292,7 @@ namespace HPAware
                             break;
                     }
                 }
-                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && !M.DisableLowHpOverlay)
+                if (Player.statLife <= Player.statLifeMax2 * M.Overlaytrigger && M.EnableLowHpOverlay)
                 {
                     Color Col = M.LowHpColor;
                     Col *= (MathF.Sin(M.LowHpFlash * Main.GlobalTimeWrappedHourly) + 1) * M.LowHpAlpha;

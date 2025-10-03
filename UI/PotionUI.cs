@@ -38,7 +38,7 @@ namespace HPAware.UI
                     {
                         Offset.Y /= M.PotionScale;      //Negates multiplication in Draw
                         Offset.Y *= M.BuffScale;        //Makes pos equal to buff icons
-                        Offset.Y += (M.DisableBuffTimer || M.BuffLayout == "Most recent only") ? 30f : 30f + (25f * M.BuffScale);
+                        Offset.Y += (!M.EnableBuffTimer || M.BuffLayout == "Most recent only") ? 30f : 30f + (25f * M.BuffScale);
                     }
                 }
                 if (Main.LocalPlayer.gravDir != 1f)

@@ -1,10 +1,9 @@
-﻿using HPAware.UI;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +20,8 @@ namespace HPAware
 
         [Header("Hurt")]     //--------------------------------
 
-        public bool DisableHurtOverlay;
+        [DefaultValue(true)]
+        public bool EnableHurtOverlay;
 
         [OptionStrings(new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" })]
         [SliderColor(255, 0, 0)]
@@ -50,7 +50,8 @@ namespace HPAware
 
         [Header("Low")]   //--------------------------------
 
-        public bool DisableLowHpOverlay;
+        [DefaultValue(true)]
+        public bool EnableLowHpOverlay;
 
         public bool ClassicLowHpOverlay;
 
@@ -75,8 +76,7 @@ namespace HPAware
         [DefaultValue(4f)]
         public float LowHpFlash;
 
-        [DefaultValue(true)]
-        public bool DisableLowHpAudio;
+        public bool EnableLowHpAudio;
 
         [OptionStrings(new string[] { "Bell", "Heartbeat", "Mana Chirp", "Click", "Bell (No Pitch)" })]
         [SliderColor(255, 0, 0)]
@@ -105,7 +105,8 @@ namespace HPAware
 
         [Header("Bar")]   //--------------------------------
 
-        public bool DisableHPBar;
+        [DefaultValue(true)]
+        public bool EnableHPBar;
 
         [Range(10, 610)]
         [Slider]
@@ -126,9 +127,11 @@ namespace HPAware
 
         [Header("Potion")]    //--------------------------------
 
-        public bool DisablePSAudio;
+        [DefaultValue(true)]
+        public bool EnablePSAudio;
 
-        public bool DisablePSVisual;
+        [DefaultValue(true)]
+        public bool EnablePSVisual;
 
         [Range(10, 180)]
         [Slider]
@@ -149,7 +152,8 @@ namespace HPAware
 
         [Header("Debuff")]  //--------------------------------
 
-        public bool DisableBuffVisual;
+        [DefaultValue(true)]
+        public bool EnableBuffVisual;
 
         [OptionStrings(new string[] { "Most recent only", "Horizontal", "Vertical" })]
         [SliderColor(255, 0, 0)]
@@ -157,8 +161,7 @@ namespace HPAware
         [DefaultValue("Vertical")]
         public string BuffLayout;
 
-        [DefaultValue(true)]
-        public bool DisableBuffTimer;
+        public bool EnableBuffTimer;
 
         [Range(10, 610)]
         [Slider]
@@ -192,17 +195,17 @@ namespace HPAware
             }
         }
 
-        [JsonExtensionData]
+        [JsonExtensionData]     //Note: Must be from Newtonsoft.Json, System.Text.Json.Serialization doesn't work
         private IDictionary<string, JToken> OldData = new Dictionary<string, JToken>();
 
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
             //This method updates old var names to their new ones if they were changed
+            //Deserialization occurs on mod reload
             //Pre-1.0.5.0 var names
             bool Bool;
-            JToken Token;
-            if (OldData.TryGetValue("DisableHurtOverlay", out Token))
+            if (OldData.TryGetValue("DisableHurtOverlay", out var Token))
             {
                 Bool = Token.ToObject<bool>();
                 EnableHurtOverlay = !Bool;
@@ -236,6 +239,11 @@ namespace HPAware
             {
                 Bool = Token.ToObject<bool>();
                 EnableBuffVisual = !Bool;
+            }
+            if (OldData.TryGetValue("DisableBuffTimer", out Token))
+            {
+                Bool = Token.ToObject<bool>();
+                EnableBuffTimer = !Bool;
             }
             OldData.Clear();    //Required to prevent crashing
         }

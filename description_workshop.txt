@@ -6,7 +6,7 @@ This is a simple client-side mod that contains:
     [*]Debuff indicators above you whenever you obtain a debuff
     [*]Extra, optional features such as audio indicators, gray vision, and more
 [/list]
-Every feature can be disabled or altered to your liking in the config.
+Each feature is highly customizable & can be toggled on/off in the config.
 
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3114911965]Debuff Blacklist Guide[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3166170979]Custom Sounds Guide[/url]
