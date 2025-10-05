@@ -1,3 +1,5 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
 
 - Added bar start percentage
+- Fixed UI options not disappearing when disabled
+- Minor code optimizations

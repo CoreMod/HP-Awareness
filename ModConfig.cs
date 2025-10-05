@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Graphics.Effects;
 
 namespace HPAware
 {
@@ -193,9 +194,51 @@ namespace HPAware
 
         public override void OnChanged()
         {
-            if (!Main.gameMenu)     //Called whenever config updates mid-game
+            //Called whenever config updates mid-game
+            if (!Main.gameMenu)
             {
                 GetInstance<BuffSystems>().UpdateBlacklistedDebuffs();
+                //This mod doesn't run on the server anyways but just in case (only on changed client)
+                if (!Main.dedServ)
+                {
+                    HPAwareSystem H = GetInstance<HPAwareSystem>();
+                    if (!EnableHPBar)
+                    {
+                        H.HideHPBar();
+                    }
+                    if (!EnablePSVisual)
+                    {
+                        H.HidePotion();
+                    }
+                    if (!EnableBuffVisual)
+                    {
+                        H.HideDebuff();
+                    }
+                    //Turn off alternate HP overlay if on
+                    foreach (string Overlay in GetInstance<HPSystemPlayer>().HurtTypes)
+                    {
+                        if (!EnableHurtOverlay || (Overlay != HurtOverlayType && Filters.Scene[Overlay].IsActive()))
+                        {
+                            Filters.Scene[Overlay].Deactivate();
+                        }
+                    }
+                    if (!EnableLowHpOverlay)
+                    {
+                        Filters.Scene["LowHPBasic"].Deactivate();
+                        Filters.Scene["LowHPNew"].Deactivate();
+                    }
+                    else
+                    {
+                        if (!ClassicLowHpOverlay && Filters.Scene["LowHPBasic"].IsActive())
+                        {
+                            Filters.Scene["LowHPBasic"].Deactivate();
+                        }
+                        else if (ClassicLowHpOverlay && Filters.Scene["LowHPNew"].IsActive())
+                        {
+                            Filters.Scene["LowHPNew"].Deactivate();
+                        }
+                    }
+                }
             }
         }
 

@@ -14,20 +14,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace HPAware
 {
-    public enum LowHPSound
-    {
-        Bell,
-        Heartbeat,
-        ManaChirp,
-        Click,
-        BellNoPitch
-    }
-
     public class HPSystemPlayer : ModPlayer
     {
         private readonly Modconfig M = GetInstance<Modconfig>();
         private readonly BuffSystems B = GetInstance<BuffSystems>();
-        private readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
+        public readonly string[] HurtTypes = new string[] { "HPOverlay", "NewHPOverlay", "HPOverlayFlat" };
 
         private float ShaderFade;
         public int PotionTimer;
@@ -46,17 +37,15 @@ namespace HPAware
         {
             if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
+                //Show hurt overlay
                 string HurtOverlay = M.HurtOverlayType;
                 if (M.EnableHurtOverlay)
                 {
                     Filters.Scene.Activate(HurtOverlay);
                     ShaderFade = 1f;
                 }
-                else if (Filters.Scene[HurtOverlay].IsActive())
-                {
-                    Filters.Scene[HurtOverlay].Deactivate();
-                }
                 
+                //Show HP bar
                 if (M.EnableHPBar && Player.statLife <= Player.statLifeMax2 * M.HPBarTrigger)
                 {
                     BarTimer = M.HPBarDelay;
@@ -252,22 +241,6 @@ namespace HPAware
                 if (Filters.Scene["MoonLord"].IsActive() && M.DisableMLShader)
                 {
                     Filters.Scene["MoonLord"].Deactivate();
-                }
-                //Turn off alternate HP overlay if on
-                foreach (string Overlay in HurtTypes)
-                {
-                    if (Overlay != HurtOverlay && Filters.Scene[Overlay].IsActive())
-                    {
-                        Filters.Scene[Overlay].Deactivate();
-                    }
-                }
-                if (!M.ClassicLowHpOverlay && Filters.Scene["LowHPBasic"].IsActive())
-                {
-                    Filters.Scene["LowHPBasic"].Deactivate();
-                }
-                else if (M.ClassicLowHpOverlay && Filters.Scene["LowHPNew"].IsActive())
-                {
-                    Filters.Scene["LowHPNew"].Deactivate();
                 }
             }
         }
