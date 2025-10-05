@@ -117,6 +117,10 @@ namespace HPAware
 
         [SliderColor(0, 0, 255)]
         [DefaultValue(1f)]
+        public float HPBarTrigger;
+
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(1f)]
         public float HPBarOpacity;
 
         [Range(0.3f, 2f)]

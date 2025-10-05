@@ -204,6 +204,11 @@ Modconfig: {
 			'''
 	}
 
+	HPBarTrigger: {
+		Label: Bar Appear Percentage
+		Tooltip: Having HP lower or equal to this percentage lets the bar appear
+	}
+
 	HPBarOpacity: {
 		Label: Bar Opacity
 		Tooltip: Determines bar transparency

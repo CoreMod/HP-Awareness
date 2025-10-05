@@ -1,6 +1,3 @@
 v{ModVersion} published to {tMLBuildPurpose} tML v{tMLVersion}.
 
-- Added gray vision as an extra feature
-- Added color option to both overlays
-- Added ability to disable low hp flashing (set flashing to 0)
-- Tweaked some config wording
+- Added bar start percentage

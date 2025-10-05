@@ -39,7 +39,7 @@ namespace HPAware
 
         public override void OnEnterWorld()
         {
-            GetInstance<BuffSystems>().UpdateBlacklistedDebuffs();
+            B.UpdateBlacklistedDebuffs();
         }
 
         public override void PostHurt(Player.HurtInfo info)
@@ -57,7 +57,7 @@ namespace HPAware
                     Filters.Scene[HurtOverlay].Deactivate();
                 }
                 
-                if (M.EnableHPBar)
+                if (M.EnableHPBar && Player.statLife <= Player.statLifeMax2 * M.HPBarTrigger)
                 {
                     BarTimer = M.HPBarDelay;
                     BarAlpha = M.HPBarOpacity;
