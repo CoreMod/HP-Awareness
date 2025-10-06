@@ -24,7 +24,7 @@ namespace HPAware
         public int PotionTimer;
         public int DebuffTimer;
         private int BarTimer;
-        public float BarAlpha;
+        public float BarAlphaLerp;
         public int DebuffToShow;
         public List<int> DebuffsToShow = new(Player.MaxBuffs);
 
@@ -49,7 +49,7 @@ namespace HPAware
                 if (M.EnableHPBar && Player.statLife <= Player.statLifeMax2 * M.HPBarTrigger)
                 {
                     BarTimer = M.HPBarDelay;
-                    BarAlpha = M.HPBarOpacity;
+                    BarAlphaLerp = 1f;
                     GetInstance<HPAwareSystem>().HideHPBar();
                     GetInstance<HPAwareSystem>().ShowHPBar();
                 }
@@ -84,9 +84,9 @@ namespace HPAware
                     }
                 }
                 //Hide debuff UI
-                if (DebuffTimer > 0 && DebuffTimer <= 600)  //600+ is infinite
+                if (DebuffTimer > 0 && M.BuffDelay <= 600)  //600+ is infinite
                 {
-                    DebuffTimer--;
+                    DebuffTimer = Math.Clamp(DebuffTimer - 1, 0, M.BuffDelay);  //Clamp max updates value in case config value changes to something lower
                 }
                 if (DebuffTimer <= 0 || DebuffsToShow.Count == 0)
                 {
@@ -109,7 +109,7 @@ namespace HPAware
                 //Hide potion UI
                 if (PotionTimer > 0)
                 {
-                    PotionTimer--;
+                    PotionTimer = Math.Clamp(PotionTimer - 1, 0, M.PotionDelay);   //Clamp max updates value in case config value changes to something lower
                 }
                 if (PotionTimer <= 0)
                 {
@@ -224,15 +224,15 @@ namespace HPAware
                 }
 
                 //Manage HP bar
-                if (BarTimer > 0 && BarTimer <= 600)  //600+ is infinite
+                if (BarTimer > 0 && M.HPBarDelay <= 600)  //600+ is infinite
                 {
-                    BarTimer--;
+                    BarTimer = Math.Clamp(BarTimer - 1, 0, M.HPBarDelay);   //Clamp max updates value in case config value changes to something lower
                 }
-                if (BarAlpha > 0f && BarTimer <= 0)
+                if (BarTimer <= 0 || Player.statLife > Player.statLifeMax2 * M.HPBarTrigger)
                 {
-                    BarAlpha -= 0.1f;
+                    BarAlphaLerp = Math.Clamp(BarAlphaLerp - 0.1f, 0, 1f);
                 }
-                if (BarAlpha <= 0f)
+                if (BarAlphaLerp <= 0f)
                 {
                     GetInstance<HPAwareSystem>().HideHPBar();
                 }

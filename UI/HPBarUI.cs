@@ -43,14 +43,12 @@ namespace HPAware.UI
 					G = 255f * HPPercent * 2f;
 					R = 255f;
 				}
-				R *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
-				G *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
-				A *= Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlpha;
-				R = MathHelper.Clamp(R, 0f, 255f);
+                R = MathHelper.Clamp(R, 0f, 255f);
 				G = MathHelper.Clamp(G, 0f, 255f);
 				A = MathHelper.Clamp(A, 0f, 255f);
 				Color Col = new((byte)R, (byte)G, (byte)B, (byte)A);
-				if (HP36 < 3)
+				Col *= GetInstance<Modconfig>().HPBarOpacity * Main.LocalPlayer.GetModPlayer<HPSystemPlayer>().BarAlphaLerp;
+                if (HP36 < 3)
 				{
 					HP36 = 3;
 				}
