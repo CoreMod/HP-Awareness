@@ -104,6 +104,19 @@ namespace HPAware
         [DefaultValue(1f)]
         public float GrayMaxIntensity;
 
+        [Header("Muffle")]   //--------------------------------
+
+        public bool EnableAudioMuffle;
+
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(0.25f)]
+        public float MuffleTrigger;
+
+        [Increment(0.1f)]
+        [SliderColor(0, 0, 255)]
+        [DefaultValue(0.3f)]
+        public float MuffleIntensity;
+
         [Header("Bar")]   //--------------------------------
 
         [DefaultValue(true)]

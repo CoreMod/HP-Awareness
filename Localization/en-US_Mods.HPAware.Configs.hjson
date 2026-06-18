@@ -12,6 +12,7 @@ Modconfig: {
 			(NOTE: Fargo's Mutant Mod adds a similar feature. If these don't seem to work, check their config)
 			'''
 		Gray: "[i:1099] Gray Vision"
+		Muffle: "[i:2010] Music Muffle"
 	}
 
 	DisableMLShader: {
@@ -185,6 +186,31 @@ Modconfig: {
 			'''
 			Determines maximum vision intensity at 0-1% HP
 			Higher = More intense
+			'''
+	}
+
+	# Audio Muffle ----------------------------------------------
+	EnableAudioMuffle: {
+		Label: Enable Music Muffle
+		Tooltip:
+			'''
+			When active, music gets quieter
+			Disabled by default
+			'''
+	}
+
+	MuffleTrigger: {
+		Label: Start Percentage
+		Tooltip: Having HP lower or equal to this percentage starts muffle
+	}
+
+	MuffleIntensity: {
+		Label: Muffle Intensity
+		Tooltip:
+			'''
+			Determines how quiet music becomes while active
+			Higher = More quiet
+			1 = Muted
 			'''
 	}
 
