@@ -1,6 +1,7 @@
 displayName = HP Awareness
+displayName.en_US = HP Awareness
 author = Core
-version = 1.0.6.0
+version = 1.0.6.1
 side = Client
 hideCode = true
 hideResources = true

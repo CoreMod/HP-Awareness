@@ -21,7 +21,7 @@ namespace HPAware
 
         private void MuffleMusic()
         {
-            if (!Main.dedServ && Main.myPlayer == Player.whoAmI)
+            if (M.EnableAudioMuffle && !Main.dedServ && Main.myPlayer == Player.whoAmI)
             {
                 //musicFade is used by ML pre-spawn (for 1 frame) and transitioning between music tracks
                 //It ranges 0-1 regardless of music volume
