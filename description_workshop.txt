@@ -11,5 +11,8 @@ Each feature is highly customizable & can be toggled on/off in the config.
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3114911965]Debuff Blacklist Guide[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3166170979]Custom Sounds Guide[/url]
 
+[hr][/hr]
+Check out my other mod:
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2864891861][img]https://images.steamusercontent.com/ugc/2000192155596221644/27F14DE078AFFB170628CD808F157532E0D2523B/?imw=100&imh=100&impolicy=Letterbox[/img][/url]
 Donation Jar:
 [url=https://ko-fi.com/coremods][img]https://raw.githubusercontent.com/CoreMod/VBR-Public/main/Kofi.png[/img][/url]
